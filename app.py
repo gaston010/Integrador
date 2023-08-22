@@ -8,7 +8,26 @@ app = discord_all()
 
 @app.route('/')
 def hello_world():
-    return 'Prueba de la API'
+    data_response = {
+        "Servidor EndPoints": {
+            "List Server": "/api/server/list",
+            "List Server Disable": "/api/server/list/disable",
+            "List Server Id": "/api/server/<int:server_id>",
+            "Add Server": "/api/server/add",
+            "Update Server": "/api/server/update/<int:id_server>",
+            "Delete Server": "/api/server/delete/<int:id_server>"
+        },
+        "User EndPoints": {
+            "List User": "/api/user/list",
+            "List User Disable": "/api/user/list/disable",
+            "List User Id": "/api/user/<int:user_id>",
+            "Add User": "/api/user/add",
+            "Update User": "/api/user/update/<int:id_user>",
+            "Delete User": "/api/user/delete/<int:id_user>"
+
+        }
+    }
+    return data_response, 200
 
 
 if __name__ == '__main__':
