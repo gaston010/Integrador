@@ -7,8 +7,8 @@ app = discord_all()
 
 
 @app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+def hello_world():
+    return 'Prueba de la API'
 
 
 if __name__ == '__main__':
