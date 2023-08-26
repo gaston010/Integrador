@@ -96,6 +96,14 @@ def discord_all():
     # ARREGLAR DESPUES ESTO , ESTO SOLO DEVUELVE UNA LISTA DE SERVIDORES PERO SI EL MISMO N SE CUENTRA DEVUELVE ALGO VACIO
     # # NO QUIERO ESO
     # # SI NO QUE DEVUELVA UN MENSAJE DE ERROR O ALGO por el estilo!!!
+
+    @app.route("/api/server/list/disable", methods=['GET'])
+    def get_server_disable():
+        try:
+            server_disable = ModelServer.get_server_disable()
+            return server_disable
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
     @app.route('/api/server/<int:id_server>')
     def get_server_by_id(id_server):
         try:

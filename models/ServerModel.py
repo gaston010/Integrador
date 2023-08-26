@@ -192,23 +192,24 @@ class ModelServer:
         except Exception as e:
             raise Exception(e)
 
-# @classmethod
-# def del_server(cls, id_server):
-#     conn = Conexion()
-#     try:
-#         sql = 'UPDATE servidor SET estado = 0 WHERE id_servidor = %s'
-#         conn.execute(sql, (id_server,))
-#         conn.commit()
-#         if conn.rowcount() > 0:
-#             data_response = {
-#                 'message': 'Server deleted successfully',
-#                 'TIP': 'Serves was be disable status = 0 on database'
-#             }
-#             return data_response, 200
-#         else:
-#             data_response = {
-#                 "Message": "Server not deleted or not found"
-#             }
-#             return data_response, 404
-#     except Exception as error:
-#         raise Exception(error)
+    @classmethod
+    def get_server_disable(cls):
+        conn = Conexion()
+        try:
+            sql = """SELECT * FROM servidor WHERE estado = 0 """
+            conn.execute(sql)
+            servers = conn.fetchall()
+            server_list = []
+            if servers is None:
+                response_data = {
+                    'message': 'Servers not found'
+                }
+                return response_data, 404
+            else:
+                for server in servers:
+                    server = Server(server[0], server[1], server[2],
+                                    server[3], server[4], server[5], server[6])
+                    server_list.append(server.to_json())
+            return server_list, 200
+        except Exception as e:
+            raise Exception(e)
