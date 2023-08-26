@@ -33,4 +33,5 @@ def hello_world():
 if __name__ == '__main__':
     # app.register_blueprint(User.user_app, url_prefix='/api/user')
     # app.register_blueprint(Server.server_app, url_prefix='/api/server')
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.run()
