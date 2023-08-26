@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, request
-
+from flask_cors import CORS
 from models.ServerModel import ModelServer
 from models.UserModel import ModelUser
 
 
 def discord_all():
     app = Flask(__name__)
+    CORS(app)
 
     @app.route('/api/user/list')
     def get_user():
