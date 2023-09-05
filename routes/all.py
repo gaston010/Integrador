@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from models.ServerModel import ModelServer
 from models.UserModel import ModelUser
+from models.ChannelModel import ModelChannel
 
 
 def discord_all():
@@ -104,6 +105,7 @@ def discord_all():
             return server_disable
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
     @app.route('/api/server/<int:id_server>')
     def get_server_by_id(id_server):
         try:
@@ -164,6 +166,16 @@ def discord_all():
         try:
             server = ModelServer.get_server_by_user(id_user)
             return server
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+    # CANALES
+
+    @app.route("/api/channel/server/<int:id_channel>", methods=['GET'])
+    def channel_id(id_user):
+        try:
+            channel = ModelChannel.get_channel_by_user(id_user)
+            return channel
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
 

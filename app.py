@@ -13,6 +13,7 @@ def hello_world():
             "List Server": "/api/server/list",
             "List Server Disable": "/api/server/list/disable",
             "List Server Id": "/api/server/<int:server_id>",
+            "Server By user": "/api/server/user/<int:id_user>",
             "Add Server": "/api/server/add",
             "Update Server": "/api/server/update/<int:id_server>",
             "Delete Server": "/api/server/delete/<int:id_server>"
@@ -25,6 +26,9 @@ def hello_world():
             "Update User": "/api/user/update/<int:id_user>",
             "Delete User": "/api/user/delete/<int:id_user>"
 
+        },
+        "Channel EndPoints": {
+            "List Channel": "/api/channel/list",
         }
     }
     return data_response, 200
