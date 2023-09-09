@@ -45,8 +45,8 @@ class ModelUser:
             print(dato)
             if dato[1] == email and dato[2] == password:  # noqa
                 result = {
-                    'message': 'OK, login success',
-                    'user_data': {
+                    "Message": "login success",
+                    "User": {
                         'nombre': dato[0],
                         'email': dato[1],
                     }

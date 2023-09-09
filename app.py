@@ -29,7 +29,12 @@ def hello_world():
         },
         "Channel EndPoints": {
             "List Channel": "/api/channel/list",
+            "Channel by id": "/api/channel/server/<int:id_channel>"
+        },
+        "Login User":{
+            "Login": "/api/user/login",
         }
+
     }
     return data_response, 200
 

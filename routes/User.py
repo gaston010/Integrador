@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 
 from models.UserModel import ModelUser
+from models.LoginModel import LoginUser
 
 # Blueprint
 user_app = Blueprint('user_app', __name__)
@@ -83,7 +84,7 @@ def login():
     if not email or not password:
         return jsonify({'message': 'Missing data'}), 400
     try:
-        user = ModelUser.login(email, password)
+        user = LoginUser.login_cls(email, password)
         return user
     except Exception as e:
         return Exception({'message': 'Internal Server Error', 'Error': str(e)}), 500

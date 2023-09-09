@@ -2,16 +2,20 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 class UserLogin:
-    def __init__(self, nombre, email, password):
+    def __init__(self, id_usuario, nombre, email, password, nick, avatar):
+        self.id_usuario = id_usuario
         self.nombre = nombre
         self.email = email
         self.password = password
+        self.nick = nick
+        self.avatar = avatar
 
     def to_json_login(self):
         return {
-            'nombre': self.nombre,
-            'email': self.email,
-            'password': self.password
+            "Nombre": self.nombre,
+            "Email": self.email,
+            "Nick": self.nick,
+            "Avatar": self.avatar
         }
 
 

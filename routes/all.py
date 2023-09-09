@@ -171,10 +171,18 @@ def discord_all():
 
     # CANALES
 
-    @app.route("/api/channel/server/<int:id_channel>", methods=['GET'])
-    def channel_id(id_user):
+    @app.route("/api/channel/server/<int:id_server>", methods=['GET'])
+    def channel_id(id_server):
         try:
-            channel = ModelChannel.get_channel_by_user(id_user)
+            channel = ModelChannel.get_channel_by_server(id_server)
+            return channel
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+    @app.route("/api/channel/list", methods=['GET'])
+    def channel_list():
+        try:
+            channel = ModelChannel.get_channel_by_user()
             return channel
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
