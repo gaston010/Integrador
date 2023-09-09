@@ -1,5 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+
+from models import LoginModel
+from models.LoginModel import LoginUser
 from models.ServerModel import ModelServer
 from models.UserModel import ModelUser
 from models.ChannelModel import ModelChannel
@@ -15,7 +18,7 @@ def discord_all():
             user = ModelUser.get_users()
             return jsonify({'Users': user}), 200
         except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+            return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500
 
     @app.route('/api/user/list/disable', methods=['GET'])
     def get_user_status():
@@ -23,7 +26,7 @@ def discord_all():
             user_status = ModelUser.get_users_disable()
             return user_status
         except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+            return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500
 
     @app.route('/api/user/<int:user_id>')
     def get_user_id(user_id):
@@ -31,7 +34,7 @@ def discord_all():
             user = ModelUser.user_id(user_id)
             return jsonify({'Users': user})
         except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+            return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500
 
     #
     @app.route('/api/user/add', methods=['POST'])
@@ -41,13 +44,13 @@ def discord_all():
         password = request.json['password']
 
         if not nombre or not email or not password:
-            return jsonify({'message': 'Missing data'}), 400
+            return jsonify({'Msg': 'Missing data'}), 400
 
         try:
             user = ModelUser.add_user(nombre, email, password)
-            return jsonify({"create": user}), 201
+            return jsonify({"Create": user}), 201
         except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+            return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500
 
     @app.route('/api/user/update/<int:id_user>', methods=['PUT'])
     def edit_user(id_user):
@@ -60,7 +63,7 @@ def discord_all():
             user_edit = ModelUser.edit_user(nombre, apellido, nick, avatar, id_user)
             return user_edit
         except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+            return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500
 
     @app.route('/api/user/delete/<int:id_user>', methods=['DELETE'])
     def delete_user(id_user):
@@ -68,7 +71,7 @@ def discord_all():
             user_delete = ModelUser.delete_user(id_user)
             return user_delete
         except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+            return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500
 
     #
     @app.route('/api/user/login', methods=['POST'])
@@ -76,10 +79,14 @@ def discord_all():
         email = request.json['email']
         password = request.json['password']
 
-        if not email or not password:
-            return jsonify({'message': 'Missing data'}), 400
+        if not email:
+            return jsonify({'Msg': 'Missing email'}), 400
+
+        if not password:
+            return jsonify({'Msg': 'Missing password'}), 400
+
         try:
-            user = ModelUser.login(email, password)
+            user = LoginUser.login_cls(email, password)
             return user
         except Exception as e:
             return Exception({'message': 'Internal Server Error', 'Error': str(e)}), 500
