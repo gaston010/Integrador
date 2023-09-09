@@ -1,3 +1,4 @@
+from models.entity.Channel import Channel
 from utils.Conexion import Conexion
 
 
@@ -74,18 +75,14 @@ class ModelChannel:
             conn.execute(sql, (id_server,))
             channel = conn.fetchall()
             if channel is not None:
-                for data in channel:
-                    response_data = {
-                        "id_canal": data[0],
-                        "nombre_canal": data[1],
-                        "descripcion": data[2],
-                        "servidor_id": data[3],
-                        "autor_id": data[4]
-                    }
-                    return response_data, 200
+                chanel_list = []
+                for canal in channel:
+                    item = Channel(canal[0], canal[1], canal[2], canal[3], canal[4], canal[5])
+                    chanel_list.append(item.to_json())
+                return chanel_list, 200
             else:
                 response_data = {
-                    "message": "No se encontraron canales"
+                    "message": "No se encontraron canales en el servidor"
                 }
                 return response_data, 404
 
