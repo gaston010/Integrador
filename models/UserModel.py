@@ -181,3 +181,4 @@ class ModelUser:
             return cls.response(fetch)
         except Exception as e:
             raise Exception(e)
+

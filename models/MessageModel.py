@@ -25,11 +25,11 @@ class MessageModel:
             return Exception(e)
 
     @classmethod
-    def get_message(cls, id_server, id_channel):
+    def get_message(cls, id_channel):
         con = Conexion()
         try:
-            sql = """SELECT * FROM mensaje WHERE servidor_id = %s AND canal_id = %s"""
-            con.execute(sql, (id_server, id_channel))
+            sql = """SELECT * FROM mensaje WHERE canal_id = %s"""
+            con.execute(sql, (id_channel,))
             data = con.fetchall()
             if con.rowcount() > 0:
                 mensaje_list = []
@@ -66,11 +66,11 @@ class MessageModel:
             return Exception(e)
 
     @classmethod
-    def update_message(cls, id_message, mensajes):
+    def update_message(cls, id_message, mensajes, fecha_creacion, fecha_actualizacion):
         conn = Conexion()
         try:
             sql = """UPDATE mensaje SET mensajes = %s WHERE id_mensaje = %s"""
-            conn.execute(sql, (mensajes, id_message))
+            conn.execute(sql, (mensajes, id_message, fecha_creacion, fecha_actualizacion,))
             conn.commit()
             if conn.rowcount() > 0:
                 data_response = {

@@ -34,7 +34,7 @@ def hello_world():
             "Login": "/api/user/login",
         },
         "Messager EndPoints": {
-            "Messager by id channel": "/api/message/<int:id_server>/<int:id_channel>",
+            "Messager by id channel": "/api/message?<int:id_channel>",
             "Add Messager": "/api/messager/add",
             "Delete Messager": "/api/messager/delete/<int:id_messager>",
             "Update Message": "/api/messager/update/<int:id_messager>"

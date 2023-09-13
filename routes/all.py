@@ -211,10 +211,12 @@ def discord_all():
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
 
-    @app.route("/api/message/<int:id_server>/<int:id_channel>", methods=['GET'])
-    def get_message(id_server, id_channel):
+    @app.route("/api/message/", methods=['GET'])
+    def get_message():
+        arg = request.args
+        id_channel = arg['id_channel']
         try:
-            message = MessageModel.get_message(id_server, id_channel)
+            message = MessageModel.get_message(id_channel)
             return message
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
@@ -231,7 +233,9 @@ def discord_all():
     def update_message(id_message):
         try:
             mensajes = request.json['mensajes']
-            message = MessageModel.update_message(id_message, mensajes)
+            fecha_creacion = request.json['fecha_creacion']
+            fecha_actualizacion = request.json['fecha_actualizacion']
+            message = MessageModel.update_message(id_message, mensajes, fecha_creacion, fecha_actualizacion)
             return message
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
