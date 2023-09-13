@@ -233,9 +233,15 @@ def discord_all():
     def update_message(id_message):
         try:
             mensajes = request.json['mensajes']
-            fecha_creacion = request.json['fecha_creacion']
-            fecha_actualizacion = request.json['fecha_actualizacion']
-            message = MessageModel.update_message(id_message, mensajes, fecha_creacion, fecha_actualizacion)
+            message = MessageModel.update_message(id_message, mensajes)
+            return message
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+    @app.route('/api/message/<int:id_message>', methods=['GET'])
+    def get_message_id(id_message):
+        try:
+            message = MessageModel.get_message_by_id(id_message)
             return message
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500

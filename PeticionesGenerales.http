@@ -19,7 +19,7 @@ POST 127.0.0.1:5000/api/message/add
 Content-Type: application/json
 
 {
-  "mensajes": "Pasteles de la vida",
+  "mensajes": "Tiempo de prueba",
   "servidor_id": 3,
   "canal_id": 3,
   "autor_id": 1
@@ -32,13 +32,20 @@ GET 127.0.0.1:5000/api/message?id_channel=3
 
 ###
 #mensaje update
-PUT 127.0.0.1:5000/api/message/update/6
+PUT 127.0.0.1:5000/api/message/update/7
 Content-Type: application/json
 
 {
-  "mensajes": "Porque no me funciona esto"
+  "mensajes": "Los tiempos cambian"
 }
 
 ###
 #mensaje delete
 DELETE 127.0.0.1:5000/api/message/delete/6
+
+
+
+
+###
+#MENSAJE BY ID
+GET 127.0.0.1:5000/api/message/7

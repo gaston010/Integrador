@@ -66,20 +66,79 @@ class MessageModel:
             return Exception(e)
 
     @classmethod
-    def update_message(cls, id_message, mensajes, fecha_creacion, fecha_actualizacion):
+    def date_mensj(cls, id_message):
+        conn = Conexion()
+        try:
+            sql = """SELECT ultima_actualizacion FROM mensaje WHERE id_mensaje = %s"""
+            conn.execute(sql, (id_message,))
+            data = conn.fetchall()
+            if conn.rowcount() > 0:
+                fecha = data[0][0]
+                return fecha, 200
+            else:
+                data_response = {
+                    "MSG": [],
+                }
+                return data_response, 400
+        except Exception as e:
+            return Exception(e)
+
+    @classmethod
+    def update_message(cls, id_message, mensajes):
         conn = Conexion()
         try:
             sql = """UPDATE mensaje SET mensajes = %s WHERE id_mensaje = %s"""
-            conn.execute(sql, (mensajes, id_message, fecha_creacion, fecha_actualizacion,))
+            conn.execute(sql, (mensajes, id_message,))
             conn.commit()
             if conn.rowcount() > 0:
                 data_response = {
                     "MSG": "Mensaje actualizado correctamente",
+                    "fecha_actualizacion": {
+                        "fecha": cls.date_mensj(id_message)
+                    }
                 }
                 return data_response, 200
             else:
                 data_response = {
                     "MSG": "No se pudo actualizar el mensaje",
+                }
+                return data_response, 400
+        except Exception as e:
+            return Exception(e)
+
+    @classmethod
+    def get_message_by_id(cls, id_message):
+        conn = Conexion()
+        try:
+            sql = """SELECT  m.id_mensaje, m.mensajes, m.autor_id, m.canal_id, m.servidor_id, m.fecha_creacion,
+                    m.ultima_actualizacion, u.id_usuario, u.nombre,u.nick, u.email FROM mensaje m
+                    INNER JOIN usuario u ON m.autor_id = u.id_usuario
+                    WHERE m.id_mensaje = %s"""
+            conn.execute(sql, (id_message,))
+            data = conn.fetchall()
+            mensaje_list = []
+            if conn.rowcount() > 0:
+                for row in data:
+                    items = {
+                        "id_mensaje": row[0],
+                        "mensaje": row[1],
+                        "autor_id": row[2],
+                        "canal_id": row[3],
+                        "servidor_id": row[4],
+                        "fecha_creacion": row[5],
+                        "ultima_actualizacion": row[6],
+                        "USUARIO": {
+                            "id_usuario": row[7],
+                            "Nombre": row[8],
+                            "nick": row[9],
+                            "Email": row[10]
+                        }
+                    }
+                    mensaje_list.append(items)
+                return mensaje_list, 200
+            else:
+                data_response = {
+                    "MSG": "No se encontraron mensajes con el id",
                 }
                 return data_response, 400
         except Exception as e:

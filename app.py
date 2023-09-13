@@ -33,11 +33,12 @@ def hello_world():
         "Login User": {
             "Login": "/api/user/login",
         },
-        "Messager EndPoints": {
-            "Messager by id channel": "/api/message?<int:id_channel>",
-            "Add Messager": "/api/messager/add",
-            "Delete Messager": "/api/messager/delete/<int:id_messager>",
-            "Update Message": "/api/messager/update/<int:id_messager>"
+        "Message EndPoints": {
+            "Message by id channel": "/api/message?<int:id_channel>",
+            "Add Message": "/api/message/add",
+            "Delete Message": "/api/message/delete/<int:id_message>",
+            "Update Message": "/api/message/update/<int:id_message>",
+            "Message by id": "/api/message/<int:id_message>"
         }
 
     }
