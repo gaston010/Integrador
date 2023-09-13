@@ -12,3 +12,33 @@ GET 127.0.0.1:5000/api/server/list
 
 ###
 GET 127.0.0.1:5000/api/channel/server/3
+
+
+###
+POST 127.0.0.1:5000/api/message/add
+Content-Type: application/json
+
+{
+  "mensajes": "Pasteles de la vida",
+  "servidor_id": 3,
+  "canal_id": 3,
+  "autor_id": 1
+}
+
+
+###
+GET 127.0.0.1:5000/api/message/3/3
+
+
+###
+#mensaje update
+PUT 127.0.0.1:5000/api/message/update/6
+Content-Type: application/json
+
+{
+  "mensajes": "Porque no me funciona esto"
+}
+
+###
+#mensaje delete
+DELETE 127.0.0.1:5000/api/message/delete/6

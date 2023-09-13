@@ -30,8 +30,14 @@ def hello_world():
         "Channel EndPoints": {
             "Channel by id": "/api/channel/server/<int:id_server>"
         },
-        "Login User":{
+        "Login User": {
             "Login": "/api/user/login",
+        },
+        "Messager EndPoints": {
+            "Messager by id channel": "/api/message/<int:id_server>/<int:id_channel>",
+            "Add Messager": "/api/messager/add",
+            "Delete Messager": "/api/messager/delete/<int:id_messager>",
+            "Update Message": "/api/messager/update/<int:id_messager>"
         }
 
     }
@@ -42,4 +48,4 @@ if __name__ == '__main__':
     # app.register_blueprint(User.user_app, url_prefix='/api/user')
     # app.register_blueprint(Server.server_app, url_prefix='/api/server')
     app.config['CORS_HEADERS'] = 'Content-Type'
-    app.run()
+    app.run(debug=True)

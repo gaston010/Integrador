@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from models import LoginModel
 from models.LoginModel import LoginUser
 from models.ServerModel import ModelServer
 from models.UserModel import ModelUser
 from models.ChannelModel import ModelChannel
+from models.MessageModel import MessageModel
 
 
 def discord_all():
@@ -101,7 +101,7 @@ def discord_all():
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
 
-    # ARREGLAR DESPUES ESTO , ESTO SOLO DEVUELVE UNA LISTA DE SERVIDORES PERO SI EL MISMO N SE CUENTRA DEVUELVE ALGO VACIO
+    # ARREGLAR DEEL MISMO N SE CUENTRA DEVUELVE ALGO VACIO
     # # NO QUIERO ESO
     # # SI NO QUE DEVUELVA UN MENSAJE DE ERROR O ALGO por el estilo!!!
 
@@ -195,6 +195,44 @@ def discord_all():
             autor_id = request.json['autor_id']
             channel = ModelChannel.add_channel(nombre_canal, descripcion, servidor_id, autor_id)
             return channel
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+    # MENSAJES
+    @app.route("/api/message/add", methods=['POST'])
+    def add_message():
+        try:
+            mensajes = request.json['mensajes']
+            servidor_id = request.json['servidor_id']
+            canal_id = request.json['canal_id']
+            autor_id = request.json['autor_id']
+            message = MessageModel.add_message(mensajes, servidor_id, canal_id, autor_id)
+            return message
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+    @app.route("/api/message/<int:id_server>/<int:id_channel>", methods=['GET'])
+    def get_message(id_server, id_channel):
+        try:
+            message = MessageModel.get_message(id_server, id_channel)
+            return message
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+    @app.route("/api/message/delete/<int:id_message>", methods=['DELETE'])
+    def delete_message(id_message):
+        try:
+            message = MessageModel.delete_message(id_message)
+            return message
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+    @app.route("/api/message/update/<int:id_message>", methods=['PUT'])
+    def update_message(id_message):
+        try:
+            mensajes = request.json['mensajes']
+            message = MessageModel.update_message(id_message, mensajes)
+            return message
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
 
