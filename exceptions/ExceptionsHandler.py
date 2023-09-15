@@ -21,6 +21,11 @@ class CustomException(Exception):
         return response
 
 
+class GeneralError(CustomException):
+    def __init__(self):
+        super().__init__(500, name="General Error", description="Internal Server Error")
+
+
 class UserNotFound(CustomException):
     def __init__(self):
         super().__init__(404, name="User Not Found", description="User not found in database")

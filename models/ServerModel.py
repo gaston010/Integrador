@@ -1,4 +1,5 @@
-from exceptions.ExceptionsHandler import ServerNotFound, ServerNotCreate, ServerExist, MissingData, UserNotFound
+from exceptions.ExceptionsHandler import ServerNotFound, ServerNotCreate, ServerExist, MissingData, UserNotFound, \
+    GeneralError
 from models import UserModel
 from models.UserModel import ModelUser
 from utils.Conexion import Conexion
@@ -92,32 +93,24 @@ class ModelServer:
     @classmethod
     def server_update(cls, nombre_servidor, descripcion, id_server):
 
+        if not nombre_servidor or not descripcion:
+            raise MissingData()
+
+        if cls.check_server(nombre_servidor):
+            raise ServerExist()
+
         conn = Conexion()
         try:
-            sql = 'UPDATE servidor SET nombre_servidor = %s, descripcion = %s WHERE id_servidor = %s'
+            sql = """UPDATE servidor SET nombre_servidor = %s, descripcion = %s WHERE id_servidor = %s"""
             conn.execute(sql, (nombre_servidor, descripcion, id_server))
             conn.commit()
             update = cls.get_server_by_id(id_server)
-            if conn.rowcount() > 0:
-                response_data = {
-                    'message': 'Server updated successfully',
-                    "New update info": {
-                        "id_servidor": update[0]['id_servidor'],
-                        "nombre_servidor": update[0]['nombre_servidor'],
-                        "descripcion": update[0]['descripcion'],
-                        "autor_id": update[0]['autor_id'],
-                        "fecha_creacion": update[0]['fecha_creacion'],
-                        "estado": update[0]['estado']
-                    }
-                }
-                return response_data, 200
+            if not update:
+                raise ServerNotFound()
             else:
-                response_data = {
-                    'message': 'Server not updated'
-                }
-                return response_data, 400
-        except Exception as e:
-            raise Exception(e)
+                return update
+        except GeneralError:
+            raise GeneralError()
 
     @classmethod
     def delete_server(cls, id_server):

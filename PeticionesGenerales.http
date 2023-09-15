@@ -135,3 +135,14 @@ Content-Type: application/json
   "descripcion": "Servidor de prueba con excpetions y errores",
   "autor_id" : 112
 }
+
+
+###
+#server update
+PUT 127.0.0.1:5000/api/server/update/10
+Content-Type: application/json
+
+{
+  "nombre_servidor": "Prueba Add",
+  "descripcion": "Servidor de prueba con excpetions"
+}

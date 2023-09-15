@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
+from exceptions.ExceptionsHandler import GeneralError
 from models.LoginModel import LoginUser
 from models.ServerModel import ModelServer
 from models.UserModel import ModelUser
@@ -103,8 +104,8 @@ def discord_all():
 
             server = ModelServer.server_update(nombre_servidor, descripcion, id_server)
             return server
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        except GeneralError:
+            raise GeneralError()
 
     @app.route('/api/server/delete/<int:id_server>', methods=['DELETE'])
     def del_servidor(id_server):
