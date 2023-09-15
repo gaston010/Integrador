@@ -65,7 +65,7 @@ class ModelUser:
         if avatar is None:
             avatar = "https://www.gravatar.com/avatar/default?s=200&d=mp"
         # is a default img for user if not have avatar and if no add new img on the edit user table
-        #the img as random img for user from the web no for the user
+        # the img as random img for user from the web no for the user
 
         if cls.check_user(id_user):
             raise UserNotFound()
@@ -90,25 +90,17 @@ class ModelUser:
     @classmethod
     def delete_user(cls, id_user):
         conn = Conexion()
-        try:
-            sql = 'UPDATE usuario SET estado = 0 WHERE id_usuario = %s'
-            conn.execute(sql, (id_user,))
-            conn.commit()
-            if conn.rowcount() > 0:
-                result = {
-                    'status': 202,
-                    'message': 'User was succesfull delete',
-                    'TIP': 'The status is 0, the user is disable, not delete'
-                }
-                return result
-            else:
-                result = {
-                    'status': 404,
-                    'message': 'User not found or not exist'
-                }
-                return result
-        except Exception as e:
-            raise Exception(e)
+        sql = 'UPDATE usuario SET estado = 0 WHERE id_usuario = %s'
+        conn.execute(sql, (id_user,))
+        conn.commit()
+        if conn.rowcount() > 0:
+            result = {
+                'Message': 'User was succesfull delete',
+                'Tip': 'User is not delete, only change status to 0'
+            }
+            return result
+        else:
+            raise UserNotFound()
 
     @classmethod
     def get_users_disable(cls):
@@ -134,3 +126,14 @@ class ModelUser:
                 return False
         except Exception as e:
             raise Exception(e)
+
+    @classmethod
+    def check_user_id(cls, user_id):
+        conn = Conexion()
+        sql = """SELECT * FROM usuario WHERE id_usuario = %s"""
+        conn.execute(sql, (user_id,))
+        dato = conn.fetchone()
+        if not dato:
+            raise UserNotFound()
+        else:
+            return True

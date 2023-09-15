@@ -11,7 +11,7 @@ def handle_exception(error):
 
 
 @errors.app_errorhandler(MissingData)
-def mising_data(error):
+def missing_data(error):
     return error.get_response()
 
 
@@ -22,4 +22,19 @@ def user_not_found(error):
 
 @errors.app_errorhandler(UpdateNotCreate)
 def update_nocreate(error):
+    return error.get_response()
+
+
+@errors.app_errorhandler(CustomException)
+def server_no_found(error):
+    return error.get_response()
+
+
+@errors.app_errorhandler(CustomException)
+def server_no_create(error):
+    return error.get_response()
+
+
+@errors.app_errorhandler(CustomException)
+def server_exist(error):
     return error.get_response()

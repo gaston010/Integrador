@@ -53,13 +53,10 @@ def discord_all():
         user_edit = ModelUser.edit_user(nombre, apellido, nick, avatar, id_user)
         return user_edit
 
-    @app.route('/api/user/delete/<int:id_user>', methods=['DELETE'])
+    @app.route('/api/user/delete/<int:id_user>', methods=['PUT'])
     def delete_user(id_user):
-        try:
-            user_delete = ModelUser.delete_user(id_user)
-            return user_delete
-        except Exception as e:
-            return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500
+        user_delete = ModelUser.delete_user(id_user)
+        return user_delete
 
     #
     @app.route('/api/user/login', methods=['POST'])
@@ -74,42 +71,29 @@ def discord_all():
 
     @app.route('/api/server/list')
     def get_server():
-        try:
-            servers = ModelServer.get_server()
-            return jsonify({'Servers': servers}), 200
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        servers = ModelServer.get_server()
+        return servers
 
-    # ARREGLAR DEEL MISMO N SE CUENTRA DEVUELVE ALGO VACIO
-    # # NO QUIERO ESO
-    # # SI NO QUE DEVUELVA UN MENSAJE DE ERROR O ALGO por el estilo!!!
-
-    @app.route("/api/server/list/disable", methods=['GET'])
+    @app.route("/api/server/disable", methods=['GET'])
     def get_server_disable():
-        try:
-            server_disable = ModelServer.get_server_disable()
-            return server_disable
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+        server_disable = ModelServer.get_server_disable()
+        return server_disable
 
     @app.route('/api/server/<int:id_server>')
     def get_server_by_id(id_server):
-        try:
-            server = ModelServer.get_server_by_id(id_server)
-            return jsonify({'Server': server})
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+        server = ModelServer.get_server_by_id(id_server)
+        return server
 
     @app.route('/api/server/add', methods=['POST'])
     def add_server():
         nombre_servidor = request.json['nombre_servidor']
         descripcion = request.json['descripcion']
         autor_id = request.json['autor_id']
-        try:
-            server = ModelServer.add_server(nombre_servidor, descripcion, autor_id)
-            return jsonify({'Info': server})
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
+        server = ModelServer.add_server(nombre_servidor, descripcion, autor_id)
+        return server
 
     @app.route('/api/server/update/<int:id_server>', methods=['PUT'])
     def update_server(id_server):

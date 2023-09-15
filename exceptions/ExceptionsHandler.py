@@ -54,3 +54,18 @@ class ChannelNoExist(CustomException):
 class MissingData(CustomException):
     def __init__(self):
         super().__init__(400, name="Missing Data", description="Some data on the request is missing")
+
+
+class ServerNotFound(CustomException):
+    def __init__(self):
+        super().__init__(404, name="Server Not Found", description="Server not found in database")
+
+
+class ServerNotCreate(CustomException):
+    def __init__(self):
+        super().__init__(404, name="Server Not Create", description="Could not create server")
+
+
+class ServerExist(CustomException):
+    def __init__(self):
+        super().__init__(409, name="Server Exist", description="Server already exist in database")
