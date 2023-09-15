@@ -74,3 +74,8 @@ class ServerNotCreate(CustomException):
 class ServerExist(CustomException):
     def __init__(self):
         super().__init__(409, name="Server Exist", description="Server already exist in database")
+
+
+class ServerJetDelete(CustomException):
+    def __init__(self):
+        super().__init__(409, name="Server Jet Delete", description="Server already delete in database")

@@ -120,7 +120,7 @@ GET 127.0.0.1:5000/api/server/disable
 
 ###
 #server by id
-GET 127.0.0.1:5000/api/server/30
+GET 127.0.0.1:5000/api/server/9
 
 
 
@@ -146,3 +146,9 @@ Content-Type: application/json
   "nombre_servidor": "Prueba Add",
   "descripcion": "Servidor de prueba con excpetions"
 }
+
+
+###
+
+#server delete
+PUT 127.0.0.1:5000/api/server/delete/9

@@ -114,18 +114,23 @@ class ModelServer:
 
     @classmethod
     def delete_server(cls, id_server):
+
         conn = Conexion()
         try:
-            sql = 'UPDATE servidor SET estado = 0 WHERE id_servidor = %s'
+            sql = """UPDATE servidor SET estado = 0 WHERE id_servidor = %s"""
             conn.execute(sql, (id_server,))
             conn.commit()
-            if conn.rowcount() > 0:
-                return {'message': 'Server deleted successfully',
-                        'TIP': 'Serves was be disable status = 0 on database'}, 200
+            delete = cls.get_server_by_id(id_server)
+            if not delete:
+                raise ServerNotFound()
             else:
-                return {'message': 'Server not found'}, 404
-        except Exception as error:
-            raise Exception(error)
+                response_data = {
+                    'message': 'Server deleted successfully',
+                    'Server info:': delete,
+                }
+                return response_data, 200
+        except GeneralError:
+            raise GeneralError()
 
     @classmethod
     def add_server_user(cls, id_user, id_server):

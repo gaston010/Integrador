@@ -107,13 +107,13 @@ def discord_all():
         except GeneralError:
             raise GeneralError()
 
-    @app.route('/api/server/delete/<int:id_server>', methods=['DELETE'])
+    @app.route('/api/server/delete/<int:id_server>', methods=['PUT'])
     def del_servidor(id_server):
         try:
             server = ModelServer.delete_server(id_server)
             return server
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        except GeneralError:
+            raise GeneralError()
 
     @app.route('/api/server/<int:id_user>/add', methods=['POST'])
     def add_server_user(id_user):
