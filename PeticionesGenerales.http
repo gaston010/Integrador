@@ -2,8 +2,8 @@ POST 127.0.0.1:5000/api/user/login
 Content-Type: application/json
 
 {
-    "email": "data@home.com",
-    "password": "admin"
+  "email": "data@home.com",
+  "password": "admin"
 }
 
 ####
@@ -49,3 +49,87 @@ DELETE 127.0.0.1:5000/api/message/delete/6
 ###
 #MENSAJE BY ID
 GET 127.0.0.1:5000/api/message/7
+
+
+###
+
+#CREATE USER
+POST 127.0.0.1:5000/api/user/add
+Content-Type: application/json
+
+{
+  "nick": "MaxFictive",
+  "nombre": "Max",
+  "apellido": "Williams",
+  "email": "max.williams@gmail.com",
+  "password": "P@ssw0rd3",
+  "nick": "OliviaF",
+  "nombre": "Olivia",
+  "apellido": "Brown",
+  "email": "olivia.brown@gmail.com",
+  "password": "P@ssw0rd4",
+  "nick": "EthanF",
+  "nombre": "Ethan",
+  "apellido": "Davis",
+  "email": "ethan.davis@gmail.com",
+  "password": "P@ssw0rd5",
+  "nick": "AvaFiction",
+  "nombre": "Ava",
+  "apellido": "Miller",
+  "email": "ava.miller@gmail.com",
+  "password": "P@ssw0rd6",
+  "nick": "LiamFictitious",
+  "nombre": "Liam",
+  "apellido": "Wilson",
+  "email": "liam.wilson@gmail.com",
+  "password": "P@ssw0rd7",
+  "nick": "EmmaFiction",
+  "nombre": "Emma",
+  "apellido": "Moore",
+  "email": "emma.moore@gmail.com",
+  "password": "P@ssw0rd8",
+  "nick": "NoahFictive",
+  "nombre": "Noah",
+  "apellido": "Taylor",
+  "email": "noah.taylor@gmail.com",
+  "password": "P@ssw0rd9"
+}
+
+###
+# user by id
+GET 127.0.0.1:5000/api/user/2
+
+
+###
+# login
+POST 127.0.0.1:5000/api/user/login
+Content-Type: application/json
+
+{
+  "email": "luisito@gmail.com",
+  "password": "administrador"
+}
+
+
+###
+# get users
+GET 127.0.0.1:5000/api/user/list
+
+
+
+###
+# UPDATE USER
+PUT 127.0.0.1:5000/api/user/update/7
+Content-Type: application/json
+
+{
+  "nick": "Javi",
+  "nombre": "Javier",
+  "apellido": "Hermosilla",
+  "avatar": ""
+}
+
+
+###
+# DELETE USER
+DELETE 127.0.0.1:5000/api/user/delete/5

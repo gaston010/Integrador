@@ -73,3 +73,4 @@ class User:
             str: el password hasheado.
         """
         return generate_password_hash(password)
+

@@ -1,5 +1,6 @@
 # Entity
-from models.entity.User import User
+from exceptions.ExceptionsHandler import MissingData, EmailUse, UserNotFound, NoUsers, UserNotCreate, UpdateNotCreate
+from models.entity.User import User, UserLogin
 
 from utils.Conexion import Conexion
 
@@ -18,135 +19,73 @@ class ModelUser:
     @classmethod
     def get_users(cls):
         conn = Conexion()
-        try:
-            sql = 'SELECT * FROM usuario'
-            conn.execute(sql)
-            user = conn.fetchall()
-            if user is not None:
-                return cls.response(user)
-            else:
-                result = {
-                    'status': 404,
-                    'message': 'Not data in database'
-                }
-                return result
-        except Exception as e:
-            return Exception(e)
-        finally:
-            conn.close()
+        sql = """SELECT * FROM usuario"""
+        conn.execute(sql)
+        fetch = conn.fetchall()
+        if not fetch:
+            raise NoUsers()
 
-    @classmethod
-    def login(cls, email, password):
-        conn = Conexion()
-        try:
-            sql = 'SELECT nombre, email, password FROM usuario WHERE email = %s'
-            conn.execute(sql, (email,))
-            dato = conn.fetchone()
-            print(dato)
-            if dato[1] == email and dato[2] == password:  # noqa
-                result = {
-                    "Message": "login success",
-                    "User": {
-                        'nombre': dato[0],
-                        'email': dato[1],
-                    }
-                }
-                return result, 200
-            elif dato[1] != email or dato[2] != password:
-                result = {
-                    'message': 'Password or email incorrect'
-                }
-                return result, 401
-            else:
-                result = {
-                    'message': 'User not found in database'
-                }
-                return result, 404
-        except Exception as e:
-            raise Exception(e)
+        return cls.response(fetch)
 
-    #
     @classmethod
     def user_id(cls, user_id):
         conn = Conexion()
-        try:
-            sql = 'SELECT * FROM usuario WHERE id_usuario = %s'
-            conn.execute(sql, (user_id,))
-            dato = conn.fetchall()
-            if dato is not None:
-                return cls.response(dato)
-            else:
-                result = {
-                    'status': 404,
-                    'message': 'No user in database, please check the id'
-                }
-                return result
-        except Exception as e:
-            raise Exception(e)
-
-    @classmethod
-    def add_user(cls, nombre, email, password):
-        conn = Conexion()
-        if cls.check_user(email):
-            result = {
-                'status': 409,
-                'message': 'El usuario ya existe'
-            }
-            return result
+        sql = """SELECT * FROM usuario WHERE id_usuario = %s"""
+        conn.execute(sql, (user_id,))
+        dato = conn.fetchall()
+        if not dato:
+            raise UserNotFound()
         else:
-            try:
-                sql = 'INSERT INTO usuario (nombre, email, password) VALUES (%s, %s, %s)'
-                values = (nombre, email, password)
-                conn.execute(sql, values)
-                conn.commit()
-                if conn.rowcount() > 0:
-                    result = {
-                        'status': 201,
-                        'message': 'Usuario creado correctamente'
-                    }
-                    return result
-            except Exception as e:
-                raise Exception(e)
+            return cls.response(dato)
 
     @classmethod
-    def check_user(cls, email):
+    def add_user(cls, nick, nombre, apellido, email, password):
         conn = Conexion()
-        try:
-            sql = 'SELECT * FROM usuario WHERE email = %s'
-            conn.execute(sql, (email,))
-            dato = conn.fetchone()
-            if dato is not None:
-                return True
-            else:
-                return False
-        except Exception as e:
-            raise Exception(e)
+
+        if not nick or not nombre or not apellido or not email or not password:
+            raise MissingData()
+
+        if cls.check_user(email):
+            raise EmailUse()
+
+        sql = """INSERT INTO usuario (nick, nombre, apellido, email, password) VALUES (%s, %s, %s, %s, %s)"""
+        conn.execute(sql, (nick, nombre, apellido, email, password,))
+        conn.commit()
+        if conn.rowcount() > 0:
+            response_data = {
+                "Message": "User was created successfully",
+            }
+            return response_data, 201
+        else:
+            raise UserNotCreate()
 
     @classmethod
     def edit_user(cls, nombre, apellido, nick, avatar, id_user):
-        conn = Conexion()
-        try:
-            sql = 'UPDATE usuario SET nombre = %s, apellido = %s, nick = %s, avatar = %s WHERE id_usuario = %s'
-            values = (nombre, apellido, nick, avatar, id_user)
-            conn.execute(sql, values)
-            conn.commit()
-            if conn.rowcount() > 0:
-                result = {
-                    'status': 202,
-                    'message': 'Usuario actualizado correctamente'
 
+        if avatar is None:
+            avatar = "https://www.gravatar.com/avatar/default?s=200&d=mp"
+        # is a default img for user if not have avatar and if no add new img on the edit user table
+        #the img as random img for user from the web no for the user
+
+        if cls.check_user(id_user):
+            raise UserNotFound()
+
+        conn = Conexion()
+        sql = """UPDATE usuario SET nombre = %s, apellido = %s, nick = %s, avatar = %s WHERE id_usuario = %s"""
+        conn.execute(sql, (nombre, apellido, nick, avatar, id_user,))
+        conn.commit()
+        if conn.rowcount() > 0:
+            response_data = {
+                "Message": "User was updated successfully",
+                "New Data": {
+                    "Nombre": nombre,
+                    "Apellido": apellido,
+                    "Nick": nick
                 }
-                return result
-            else:
-                result = {
-                    'status': 404,
-                    'message': 'No se pudo actualizar el usuario'
-                }
-                return result
-        except Exception as e:
-            raise Exception(e)
-        finally:
-            conn.close()
+            }
+            return response_data, 202
+        else:
+            raise UpdateNotCreate()
 
     @classmethod
     def delete_user(cls, id_user):
@@ -182,3 +121,16 @@ class ModelUser:
         except Exception as e:
             raise Exception(e)
 
+    @classmethod
+    def check_user(cls, email):
+        conn = Conexion()
+        try:
+            sql = 'SELECT * FROM usuario WHERE email = %s'
+            conn.execute(sql, (email,))
+            dato = conn.fetchone()
+            if dato is not None:
+                return True
+            else:
+                return False
+        except Exception as e:
+            raise Exception(e)
