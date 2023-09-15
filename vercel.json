@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "integrador/app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "integrador/app.py"
+    }
+  ]
+}
