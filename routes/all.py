@@ -117,20 +117,13 @@ def discord_all():
 
     @app.route('/api/server/<int:id_user>/add', methods=['POST'])
     def add_server_user(id_user):
-        """
-        Agrega un servidor a un usuario
 
-        :param id_user: id del usuario
-        {
-            "id_server": 1
-        }
-        """
         id_server = request.json['id_server']
         try:
-            server = ModelServer.add_server_user(id_user, id_server)
+            server = ModelServer.add_user_to_server(id_user, id_server)
             return server
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        except GeneralError:
+            raise GeneralError()
 
     @app.route('/api/server/user/<int:id_user>', methods=['GET'])
     def get_server_by_user(id_user):

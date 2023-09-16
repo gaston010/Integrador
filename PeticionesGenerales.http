@@ -133,7 +133,7 @@ Content-Type: application/json
 {
   "nombre_servidor": "Pruebas de Errores",
   "descripcion": "Servidor de prueba con excpetions y errores",
-  "autor_id" : 112
+  "autor_id": 112
 }
 
 
@@ -152,3 +152,14 @@ Content-Type: application/json
 
 #server delete
 PUT 127.0.0.1:5000/api/server/delete/9
+
+
+###
+# user into server
+
+POST 127.0.0.1:5000/api/server/11/add
+Content-Type: application/json
+
+{
+  "id_server": 43
+}

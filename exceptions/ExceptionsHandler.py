@@ -66,6 +66,11 @@ class ServerNotFound(CustomException):
         super().__init__(404, name="Server Not Found", description="Server not found in database")
 
 
+class ServerDisable(CustomException):
+    def __init__(self):
+        super().__init__(404, name="Server Disable", description="Server is disable can't add user")
+
+
 class ServerNotCreate(CustomException):
     def __init__(self):
         super().__init__(404, name="Server Not Create", description="Could not create server")
@@ -79,3 +84,18 @@ class ServerExist(CustomException):
 class ServerJetDelete(CustomException):
     def __init__(self):
         super().__init__(409, name="Server Jet Delete", description="Server already delete in database")
+
+
+class UserNotCreated(CustomException):
+    def __init__(self):
+        super().__init__(409, name="User Not Created", description="User not created in database")
+
+
+class UserNoInsert(CustomException):
+    def __init__(self):
+        super().__init__(409, name="User No Insert", description="User not insert in server")
+
+
+class UserExistOnServer(CustomException):
+    def __init__(self):
+        super().__init__(409, name="User Exist On Server", description="User already exist in server")

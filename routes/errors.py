@@ -38,3 +38,8 @@ def server_no_create(error):
 @errors.app_errorhandler(CustomException)
 def server_exist(error):
     return error.get_response()
+
+
+@errors.app_errorhandler(CustomException)
+def no_insert(error):
+    return error.get_response()

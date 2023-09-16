@@ -1,5 +1,5 @@
 from exceptions.ExceptionsHandler import ServerNotFound, ServerNotCreate, ServerExist, MissingData, UserNotFound, \
-    GeneralError
+    GeneralError, UserNoInsert, UserExistOnServer, ServerDisable
 from models import UserModel
 from models.UserModel import ModelUser
 from utils.Conexion import Conexion
@@ -133,26 +133,39 @@ class ModelServer:
             raise GeneralError()
 
     @classmethod
-    def add_server_user(cls, id_user, id_server):
+    def add_user_to_server(cls, id_user, id_server):
         conn = Conexion()
         combine = str(id_user) + str(id_server)
+
+        if ModelUser.check_status(id_user):
+            raise UserNotFound()
+
+        if cls.check_server_status(id_server):
+            raise ServerDisable()
+
+        if cls.exist_on_server(combine):
+            raise UserExistOnServer()
         try:
             sql = 'INSERT INTO usuario_servidor (usuario_id, servidor_id, combine_id) VALUES (%s, %s, %s)'
             conn.execute(sql, (id_user, id_server, combine))
             conn.commit()
+            user = ModelUser.user_id(id_user)
+            server = cls.get_server_by_id(id_server)
             if conn.rowcount() > 0:
                 response_data = {
-                    'message': 'User added to server successfully'
-
+                    "Message": "User was added successfully",
+                    "Data": [
+                        {
+                            "User": user,
+                            "Server": server
+                        }
+                    ]
                 }
                 return response_data, 200
             else:
-                response_data = {
-                    'message': 'User not added to server'
-                }
-                return response_data, 400
-        except Exception as error:
-            raise Exception(error)
+                raise UserNoInsert()
+        except GeneralError:
+            raise GeneralError()
 
     @classmethod
     def get_server_by_user(cls, id_user):
@@ -190,3 +203,31 @@ class ModelServer:
             raise ServerNotFound()
         else:
             return cls.repeat(fetch)
+
+    @classmethod
+    def exist_on_server(cls, combine):
+        conn = Conexion()
+        try:
+            sql = """SELECT * FROM usuario_servidor WHERE combine_id = %s"""
+            conn.execute(sql, (combine,))
+            fetch = conn.fetchall()
+            if not fetch:
+                return False
+            else:
+                return True
+        except GeneralError:
+            raise GeneralError()
+
+    @classmethod
+    def check_server_status(cls, id_server):
+        conn = Conexion()
+        sql = """SELECT estado FROM servidor WHERE id_servidor = %s"""
+        conn.execute(sql, (id_server,))
+        dato = conn.fetchone()
+        if dato is not None:
+            if dato[0] == 0:
+                return True
+            else:
+                return False
+        else:
+            return False

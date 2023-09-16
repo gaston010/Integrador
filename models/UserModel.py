@@ -137,3 +137,14 @@ class ModelUser:
             raise UserNotFound()
         else:
             return True
+
+    @classmethod
+    def check_status(cls, id_user):
+        conn = Conexion()
+        sql = """SELECT estado FROM usuario WHERE id_usuario = %s"""
+        conn.execute(sql, (id_user,))
+        dato = conn.fetchone()
+        if dato[0] == 0:
+            return True
+        else:
+            return False
