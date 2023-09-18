@@ -39,7 +39,7 @@ class MessageModel:
                 return mensaje_list, 200
             else:
                 data_response = {
-                    "MSG": "No se encontraron mensajes con el id del servidor y canal",
+                    "MSG": "No se encontraron mensajes con el servidor con su canal ID",
                 }
                 return data_response, 400
         except Exception as e:
