@@ -79,7 +79,9 @@ class ModelServer:
             sql = 'INSERT INTO servidor (nombre_servidor, descripcion, autor_id) VALUES (%s, %s, %s)'
             conn.execute(sql, (nombre_servidor, descripcion, autor_id))
             conn.commit()
+            id_server = cls.get_by_last_add()[0]['id_servidor']
             if conn.rowcount() > 0:
+                cls.add_user_to_server(autor_id, id_server)
                 data_response = {
                     'message': 'Server created successfully',
                     'New Server info:': cls.get_by_last_add(),

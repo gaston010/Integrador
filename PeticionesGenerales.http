@@ -58,10 +58,10 @@ POST 127.0.0.1:5000/api/user/add
 Content-Type: application/json
 
 {
-  "nick": "Elvio",
-  "nombre": "Max",
-  "apellido": "Williams",
-  "email": "williams@gmail.com",
+  "nick": "Gabrielsito",
+  "nombre": "Hacuhuacu",
+  "apellido": "Villalobos",
+  "email": "Vilte@gmail.com",
   "password": "P@ssw0rd3"
 }
 
@@ -131,9 +131,9 @@ POST 127.0.0.1:5000/api/server/add
 Content-Type: application/json
 
 {
-  "nombre_servidor": "Pruebas de Errores",
-  "descripcion": "Servidor de prueba con excpetions y errores",
-  "autor_id": 112
+  "nombre_servidor": "Se agrega el autor",
+  "descripcion": "Test para saber si el autor se agregara",
+  "autor_id": 13
 }
 
 
@@ -151,20 +151,20 @@ Content-Type: application/json
 ###
 
 #server delete
-PUT 127.0.0.1:5000/api/server/delete/9
+PUT 127.0.0.1:5000/api/server/delete/11
 
 
 ###
 # user into server
 
-POST 127.0.0.1:5000/api/server/5/add
+POST 127.0.0.1:5000/api/server/12/add
 Content-Type: application/json
 
 {
-  "id_server": 10
+  "id_server": 11
 }
 
 ###
 
-# serverby user
+# server by user
 GET 127.0.0.1:5000/api/server/user/5
