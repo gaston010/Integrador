@@ -58,10 +58,10 @@ POST 127.0.0.1:5000/api/user/add
 Content-Type: application/json
 
 {
-  "nick": "Gabrielsito",
-  "nombre": "Hacuhuacu",
-  "apellido": "Villalobos",
-  "email": "Vilte@gmail.com",
+  "nick": "Hernesti",
+  "nombre": "Hernesto",
+  "apellido": "Tramontina",
+  "email": "Htramontina@gmail.com",
   "password": "P@ssw0rd3"
 }
 
@@ -133,7 +133,7 @@ Content-Type: application/json
 {
   "nombre_servidor": "Se agrega el autor",
   "descripcion": "Test para saber si el autor se agregara",
-  "autor_id": 13
+  "autor_id": 14
 }
 
 
