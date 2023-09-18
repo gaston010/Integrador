@@ -26,6 +26,11 @@ def update_nocreate(error):
 
 
 @errors.app_errorhandler(CustomException)
+def user_no_server(error):
+    return error.get_response()
+
+
+@errors.app_errorhandler(CustomException)
 def server_no_found(error):
     return error.get_response()
 

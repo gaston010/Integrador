@@ -130,8 +130,8 @@ def discord_all():
         try:
             server = ModelServer.get_server_by_user(id_user)
             return server
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        except GeneralError:
+            raise GeneralError()
 
     # CANALES
 

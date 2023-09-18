@@ -41,6 +41,11 @@ class UserNotCreate(CustomException):
         super().__init__(404, name="User Not Create", description="Could not create user")
 
 
+class UserNoServer(CustomException):
+    def __init__(self):
+        super().__init__(404, name="User No Server", description="The user does not belong to any server")
+
+
 class EmailUse(CustomException):
     def __init__(self):
         super().__init__(409, name="Email Use", description="Email already in use")

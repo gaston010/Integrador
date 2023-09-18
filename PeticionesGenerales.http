@@ -157,9 +157,14 @@ PUT 127.0.0.1:5000/api/server/delete/9
 ###
 # user into server
 
-POST 127.0.0.1:5000/api/server/11/add
+POST 127.0.0.1:5000/api/server/5/add
 Content-Type: application/json
 
 {
-  "id_server": 43
+  "id_server": 10
 }
+
+###
+
+# serverby user
+GET 127.0.0.1:5000/api/server/user/5

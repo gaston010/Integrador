@@ -1,5 +1,5 @@
 from exceptions.ExceptionsHandler import ServerNotFound, ServerNotCreate, ServerExist, MissingData, UserNotFound, \
-    GeneralError, UserNoInsert, UserExistOnServer, ServerDisable
+    GeneralError, UserNoInsert, UserExistOnServer, ServerDisable, UserNoServer
 from models import UserModel
 from models.UserModel import ModelUser
 from utils.Conexion import Conexion
@@ -170,6 +170,10 @@ class ModelServer:
     @classmethod
     def get_server_by_user(cls, id_user):
         conn = Conexion()
+
+        if cls.user_no_server(id_user):
+            raise UserNoServer()
+
         try:
             sql = """SELECT id_usuario, nombre, email ,nick , servidor_id, nombre_servidor, descripcion
                     from usuario_servidor us
@@ -179,19 +183,31 @@ class ModelServer:
             conn.execute(sql, (id_user,))
             servers = conn.fetchall()
             server_list = []
-            if servers is None:
-                response_data = {
-                    'message': 'User not found'
-                }
-                return response_data, 404
-            else:
-                for server in servers:
-                    server = ServeUser(server[0], server[1], server[2], server[3], server[4], server[5], server[6])
-                    server_list.append(server.to_json())
-
+            if servers is not None:
+                if not servers:
+                    raise UserNotFound()
+                else:
+                    for server in servers:
+                        server = ServeUser(server[0], server[1], server[2],
+                                           server[3], server[4], server[5], server[6])
+                        server_list.append(server.to_json())
             return server_list, 200
-        except Exception as e:
-            raise Exception(e)
+        except GeneralError:
+            raise GeneralError()
+
+    @classmethod
+    def user_no_server(cls, id_user):
+        conn = Conexion()
+        try:
+            sql = """SELECT usuario_id FROM usuario_servidor WHERE usuario_id = %s"""
+            conn.execute(sql, (id_user,))
+            fetch = conn.fetchall()
+            if not fetch:
+                return True
+            else:
+                return False
+        except GeneralError:
+            raise GeneralError()
 
     @classmethod
     def get_server_disable(cls):
