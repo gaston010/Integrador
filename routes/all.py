@@ -211,10 +211,8 @@ def discord_all():
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
 
-    @app.route("/api/message/", methods=['GET'])
-    def get_message():
-        arg = request.args
-        id_channel = arg['id_channel']
+    @app.route("/api/message/<int:id_channel>", methods=['GET'])
+    def get_message(id_channel):
         try:
             message = MessageModel.get_message(id_channel)
             return message
