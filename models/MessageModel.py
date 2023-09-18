@@ -34,7 +34,7 @@ class MessageModel:
             if con.rowcount() > 0:
                 mensaje_list = []
                 for row in data:
-                    item = Message(row[0], row[1], row[2], row[3], row[4])
+                    item = Message(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
                     mensaje_list.append(item.to_json())
                 return mensaje_list, 200
             else:

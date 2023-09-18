@@ -27,7 +27,7 @@ Content-Type: application/json
 
 
 ###
-GET 127.0.0.1:5000/api/message?id_channel=3
+GET 127.0.0.1:5000/api/message?id_channel=1
 
 
 ###
@@ -49,3 +49,8 @@ DELETE 127.0.0.1:5000/api/message/delete/6
 ###
 #MENSAJE BY ID
 GET 127.0.0.1:5000/api/message/7
+
+
+###
+# get mensajes
+GET 127.0.0.1:5000/api/message?id_channel=1
