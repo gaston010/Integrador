@@ -1,18 +1,6 @@
 import mysql.connector as mysql
 
 
-# MYSQL_HOST = 'b9nm4g4igic9bzaav3p6-mysql.services.clever-cloud.com'
-# MYSQL_USER = 'ux1i8ulqxrjbrwki'
-# MYSQL_PASSWORD = 'uvFQ5PPgQlOB04UvRQhA'
-# MYSQL_DB = 'b9nm4g4igic9bzaav3p6'
-#
-
-
-# MYSQL_HOST = 'sql.freedb.tech'
-# MYSQL_USER = 'freedb_discordia'
-# MYSQL_PASSWORD = 'kn@QS6G3F2$WGtJ'
-# MYSQL_DB = 'freedb_discordia'
-
 class Conexion:
 
     def __init__(self):
