@@ -1,3 +1,4 @@
+from exceptions.ExceptionsHandler import NoChannels, GeneralError
 from models.entity.Channel import Channel
 from utils.Conexion import Conexion
 
@@ -81,11 +82,6 @@ class ModelChannel:
                     chanel_list.append(item.to_json())
                 return chanel_list, 200
             else:
-                response_data = {
-                    "message": "No se encontraron canales en el servidor"
-                }
-                return response_data, 404
-
-        except Exception as e:
-            raise Exception(e)
-
+                raise NoChannels()
+        except GeneralError:
+            raise GeneralError()

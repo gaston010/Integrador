@@ -104,3 +104,8 @@ class UserNoInsert(CustomException):
 class UserExistOnServer(CustomException):
     def __init__(self):
         super().__init__(409, name="User Exist On Server", description="User already exist in server")
+
+
+class NoChannels(CustomException):
+    def __init__(self):
+        super().__init__(404, name="No Channels", description="No channels in this server")

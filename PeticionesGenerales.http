@@ -168,3 +168,12 @@ Content-Type: application/json
 
 # server by user
 GET 127.0.0.1:5000/api/server/user/5
+
+
+###
+
+
+# CANALES
+# channel by server
+
+GET 127.0.0.1:5000/api/channel/server/1

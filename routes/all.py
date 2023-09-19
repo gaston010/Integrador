@@ -140,8 +140,8 @@ def discord_all():
         try:
             channel = ModelChannel.get_channel_by_server(id_server)
             return channel
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        except GeneralError:
+            raise GeneralError()
 
     @app.route("/api/channel/add", methods=['POST'])
     def add_channel():

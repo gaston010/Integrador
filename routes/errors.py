@@ -48,3 +48,8 @@ def server_exist(error):
 @errors.app_errorhandler(CustomException)
 def no_insert(error):
     return error.get_response()
+
+
+@errors.app_errorhandler(CustomException)
+def no_channels(error):
+    return error.get_response()
