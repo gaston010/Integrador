@@ -109,3 +109,13 @@ class UserExistOnServer(CustomException):
 class NoChannels(CustomException):
     def __init__(self):
         super().__init__(404, name="No Channels", description="No channels in this server")
+
+
+class NoCreate(CustomException):
+    def __init__(self):
+        super().__init__(404, name="No Create", description="Could not create")
+
+
+class UserDisable(CustomException):
+    def __init__(self):
+        super().__init__(404, name="User Disable", description="User is disable can't take action")

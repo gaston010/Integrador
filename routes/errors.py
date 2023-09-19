@@ -31,11 +31,6 @@ def user_no_server(error):
 
 
 @errors.app_errorhandler(CustomException)
-def server_no_found(error):
-    return error.get_response()
-
-
-@errors.app_errorhandler(CustomException)
 def server_no_create(error):
     return error.get_response()
 
@@ -52,4 +47,9 @@ def no_insert(error):
 
 @errors.app_errorhandler(CustomException)
 def no_channels(error):
+    return error.get_response()
+
+
+@errors.app_errorhandler(CustomException)
+def user_disable(error):
     return error.get_response()
