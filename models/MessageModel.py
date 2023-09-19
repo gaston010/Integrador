@@ -28,13 +28,19 @@ class MessageModel:
     def get_message(cls, id_channel):
         con = Conexion()
         try:
-            sql = """SELECT * FROM mensaje WHERE canal_id = %s ORDER BY id_mensaje DESC LIMIT 5"""
+            sql = """SELECT id_mensaje, mensajes, servidor_id, canal_id,autor_id, mensaje.fecha_creacion, 
+                        mensaje.ultima_actualizacion, u.nick
+                        FROM mensaje
+                        INNER JOIN usuario u ON mensaje.autor_id = u.id_usuario
+                        WHERE canal_id = %s
+                        ORDER BY id_mensaje DESC
+                        LIMIT 5"""
             con.execute(sql, (id_channel,))
             data = con.fetchall()
             if con.rowcount() > 0:
                 mensaje_list = []
                 for row in data:
-                    item = Message(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+                    item = Message(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
                     mensaje_list.append(item.to_json())
                 return mensaje_list, 200
             else:

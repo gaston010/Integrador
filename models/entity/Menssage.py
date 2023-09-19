@@ -1,6 +1,7 @@
 class Message:
 
-    def __init__(self, id_mensaje, mensajes, servidor_id, canal_id, autor_id, fecha_creacion, fecha_actualizacion):
+    def __init__(self, id_mensaje, mensajes, servidor_id, canal_id, autor_id, fecha_creacion,
+                 fecha_actualizacion, nick):
         self.id_mensaje = id_mensaje
         self.mensajes = mensajes
         self.servidor_id = servidor_id
@@ -8,6 +9,7 @@ class Message:
         self.autor_id = autor_id
         self.fecha_creacion = fecha_creacion
         self.fecha_actualizacion = fecha_actualizacion
+        self.nick = nick
 
     def to_json(self):
         return {
@@ -17,5 +19,7 @@ class Message:
             "Canal_ID": self.canal_id,
             "Autor_ID": self.autor_id,
             "Fecha_Creacion": self.fecha_creacion,
-            "Fecha_Actualizacion": self.fecha_actualizacion
+            "Fecha_Actualizacion": self.fecha_actualizacion,
+            "Nick": self.nick,
+
         }
