@@ -28,7 +28,7 @@ class MessageModel:
     def get_message(cls, id_channel):
         con = Conexion()
         try:
-            sql = """SELECT * FROM mensaje WHERE canal_id = %s"""
+            sql = """SELECT * FROM mensaje WHERE canal_id = %s ORDER BY id_mensaje DESC LIMIT 5"""
             con.execute(sql, (id_channel,))
             data = con.fetchall()
             if con.rowcount() > 0:
