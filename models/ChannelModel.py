@@ -1,4 +1,4 @@
-from exceptions.ExceptionsHandler import NoChannels, GeneralError, NoCreate, MissingData, UserDisable
+from exceptions.ExceptionsHandler import NoChannels, GeneralError, NoCreate, MissingData, UserDisable, UpdateNotCreate
 from models import UserModel
 from models.UserModel import ModelUser
 from models.entity.Channel import Channel
@@ -57,12 +57,23 @@ class ModelChannel:
     @classmethod
     def update_channel(cls, nombre_canal, descripcion, id_canal):
         conn = Conexion()
+
+        if not nombre_canal or not descripcion or not id_canal:
+            raise MissingData()
+
         try:
             sql = """UPDATE canal SET nombre_canal = %s, descripcion = %s WHERE id_canal = %s"""
             conn.execute(sql, (nombre_canal, descripcion, id_canal))
-            return conn.commit()
-        except Exception as e:
-            raise Exception(e)
+            conn.commit()
+            if conn.rowcount() > 0:
+                data_response = {
+                    "message": "Channel updated successfully",
+                }
+                return data_response, 201
+            else:
+                raise UpdateNotCreate()
+        except GeneralError:
+            raise GeneralError()
 
     @classmethod
     def delete_channel(cls, id_canal):

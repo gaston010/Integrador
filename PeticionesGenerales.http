@@ -186,8 +186,21 @@ POST 127.0.0.1:5000/api/channel/add
 Content-Type: application/json
 
 {
-  "nombre_canal": "",
+  "nombre_canal": "Paradigmas del Nuevo Milenio",
   "descripcion": "Tipos de paradigmas de programacion",
   "autor_id": 1,
   "servidor_id": 1
+}
+
+
+###
+
+# update channels
+
+PUT 127.0.0.1:5000/api/channel/update/15
+Content-Type: application/json
+
+{
+  "nombre_canal": "Paradigmas Nuevos",
+  "descripcion": "Tipos de paradigmas de programacion"
 }

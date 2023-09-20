@@ -155,6 +155,16 @@ def discord_all():
         except GeneralError:
             raise GeneralError()
 
+    @app.route("/api/channel/update/<int:id_canal>", methods=['PUT'])
+    def update_channel(id_canal):
+        try:
+            nombre_canal = request.json['nombre_canal']
+            descripcion = request.json['descripcion']
+            channel = ModelChannel.update_channel(nombre_canal, descripcion, id_canal)
+            return channel
+        except GeneralError:
+            raise GeneralError()
+
     # MENSAJES
     @app.route("/api/message/add", methods=['POST'])
     def add_message():
