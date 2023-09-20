@@ -1,3 +1,4 @@
+from exceptions.ExceptionsHandler import GeneralError, MissingData, NoCreate
 from utils.Conexion import Conexion
 from models.entity.Menssage import Message
 
@@ -7,22 +8,23 @@ class MessageModel:
     @classmethod
     def add_message(cls, mensajes, servidor_id, canal_id, autor_id):
         con = Conexion()
+
+        if not servidor_id or not canal_id or not autor_id:
+            raise MissingData()
+
         try:
             sql = """INSERT INTO mensaje(mensajes, servidor_id, canal_id, autor_id) VALUES (%s, %s, %s, %s)"""
             con.execute(sql, (mensajes, servidor_id, canal_id, autor_id))
             con.commit()
             if con.rowcount() > 0:
                 data_response = {
-                    "MSG": "Mensaje agregado correctamente",
+                    "message": "Mensaje agregado correctamente",
                 }
                 return data_response, 200
             else:
-                data_response = {
-                    "MSG": "No se pudo agregar el mensaje",
-                }
-                return data_response, 400
-        except Exception as e:
-            return Exception(e)
+                raise NoCreate()
+        except GeneralError:
+            raise GeneralError()
 
     @classmethod
     def get_message(cls, id_channel):

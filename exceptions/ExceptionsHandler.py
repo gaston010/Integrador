@@ -119,3 +119,4 @@ class NoCreate(CustomException):
 class UserDisable(CustomException):
     def __init__(self):
         super().__init__(404, name="User Disable", description="User is disable can't take action")
+

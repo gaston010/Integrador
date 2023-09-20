@@ -175,8 +175,8 @@ def discord_all():
             autor_id = request.json['autor_id']
             message = MessageModel.add_message(mensajes, servidor_id, canal_id, autor_id)
             return message
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        except GeneralError:
+            raise GeneralError()
 
     @app.route("/api/message/", methods=['GET'])
     def get_message():

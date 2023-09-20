@@ -204,3 +204,17 @@ Content-Type: application/json
   "nombre_canal": "Paradigmas Nuevos",
   "descripcion": "Tipos de paradigmas de programacion"
 }
+
+
+
+###
+# Message
+POST 127.0.0.1:5000/api/message/add
+Content-Type: application/json
+
+{
+  "mensajes": "This is a test message for the channel",
+  "servidor_id": 3,
+  "canal_id": 3,
+  "autor_id": 2
+}
