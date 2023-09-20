@@ -53,3 +53,8 @@ def no_channels(error):
 @errors.app_errorhandler(CustomException)
 def user_disable(error):
     return error.get_response()
+
+
+@errors.app_errorhandler(CustomException)
+def message_no_found(error):
+    return error.get_response()

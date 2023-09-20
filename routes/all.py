@@ -180,13 +180,12 @@ def discord_all():
 
     @app.route("/api/message/", methods=['GET'])
     def get_message():
-        arg = request.args
-        id_channel = arg['id_channel']
+        id_channel = request.json['id_channel']
         try:
             message = MessageModel.get_message(id_channel)
             return message
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        except GeneralError:
+            raise GeneralError()
 
     @app.route("/api/message/delete/<int:id_message>", methods=['DELETE'])
     def delete_message(id_message):

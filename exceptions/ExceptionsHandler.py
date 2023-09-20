@@ -120,3 +120,7 @@ class UserDisable(CustomException):
     def __init__(self):
         super().__init__(404, name="User Disable", description="User is disable can't take action")
 
+
+class MessageNotFound(CustomException):
+    def __init__(self):
+        super().__init__(404, name="Message Not Found", description="Message not found in this channel")

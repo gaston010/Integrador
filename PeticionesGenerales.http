@@ -218,3 +218,14 @@ Content-Type: application/json
   "canal_id": 3,
   "autor_id": 2
 }
+
+
+###
+
+# get message
+GET 127.0.0.1:5000/api/message/
+Content-Type: application/json
+
+{
+   "id_channel": 3
+}

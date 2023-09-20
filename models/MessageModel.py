@@ -1,4 +1,4 @@
-from exceptions.ExceptionsHandler import GeneralError, MissingData, NoCreate
+from exceptions.ExceptionsHandler import GeneralError, MissingData, NoCreate, MessageNotFound
 from utils.Conexion import Conexion
 from models.entity.Menssage import Message
 
@@ -18,7 +18,7 @@ class MessageModel:
             con.commit()
             if con.rowcount() > 0:
                 data_response = {
-                    "message": "Mensaje agregado correctamente",
+                    "message": "message created successfully",
                 }
                 return data_response, 200
             else:
@@ -29,6 +29,9 @@ class MessageModel:
     @classmethod
     def get_message(cls, id_channel):
         con = Conexion()
+
+        if not id_channel:
+            raise MissingData()
         try:
             sql = """SELECT * FROM mensaje WHERE canal_id = %s"""
             con.execute(sql, (id_channel,))
@@ -36,16 +39,13 @@ class MessageModel:
             if con.rowcount() > 0:
                 mensaje_list = []
                 for row in data:
-                    item = Message(row[0], row[1], row[2], row[3], row[4])
+                    item = Message(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
                     mensaje_list.append(item.to_json())
                 return mensaje_list, 200
             else:
-                data_response = {
-                    "MSG": "No se encontraron mensajes con el id del servidor y canal",
-                }
-                return data_response, 400
-        except Exception as e:
-            return Exception(e)
+                raise MessageNotFound()
+        except GeneralError:
+            raise GeneralError()
 
     @classmethod
     def delete_message(cls, id_message):
