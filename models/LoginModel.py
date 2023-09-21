@@ -14,15 +14,8 @@ class LoginUser:
         if not email or not password:
             raise MissingData()
 
-        sql = """SELECT id_usuario, 
-                    nombre, 
-                    email, 
-                    nick , 
-                    avatar, 
-                    nick,
-                    password
-                FROM usuario 
-                WHERE email = %s AND password = %s"""
+        sql = """SELECT id_usuario, nombre, email, nick , avatar, nick, password
+                FROM usuario WHERE email = %s AND password = %s"""
         con.execute(sql, (email, password))
         user = con.fetchall()
         if not user:
