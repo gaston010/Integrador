@@ -54,3 +54,14 @@ GET 127.0.0.1:5000/api/message/7
 ###
 # get mensajes
 GET 127.0.0.1:5000/api/message/1
+
+
+###
+POST 127.0.0.1:5000/api/server/add
+Content-Type: application/json
+
+{
+  "nombre_servidor": "Un servidor de prueba",
+  "descripcion": "Un servidor de prueba",
+  "autor_id": 1
+}
