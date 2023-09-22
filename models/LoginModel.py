@@ -9,16 +9,8 @@ class LoginUser:
     @classmethod
     def login_cls(cls, email, password):
         con = Conexion()
-
         try:
-            sql = """SELECT id_usuario, 
-                        nombre, 
-                        email, 
-                        nick , 
-                        avatar, 
-                        nick,
-                        password
-                    FROM usuario 
+            sql = """SELECT id_usuario, nombre, email, nick , avatar, nick,password FROM usuario 
                     WHERE email = %s AND password = %s"""
             con.execute(sql, (email, password))
             user = con.fetchall()

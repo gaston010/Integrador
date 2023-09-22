@@ -12,6 +12,7 @@ class UserLogin:
 
     def to_json_login(self):
         return {
+            "user_id": self.id_usuario,
             "Nombre": self.nombre,
             "Email": self.email,
             "Nick": self.nick,
