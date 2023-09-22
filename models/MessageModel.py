@@ -56,16 +56,13 @@ class MessageModel:
             conn.commit()
             if conn.rowcount() > 0:
                 data_response = {
-                    "MSG": "Mensaje eliminado correctamente",
+                    "message": "message successfully deleted",
                 }
                 return data_response, 200
             else:
-                data_response = {
-                    "MSG": "No se pudo eliminar el mensaje",
-                }
-                return data_response, 400
-        except Exception as e:
-            return Exception(e)
+                raise MessageNotFound()
+        except GeneralError:
+            raise GeneralError()
 
     @classmethod
     def date_mensj(cls, id_message):

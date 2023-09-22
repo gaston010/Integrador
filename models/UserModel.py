@@ -1,6 +1,6 @@
 # Entity
 from exceptions.ExceptionsHandler import MissingData, EmailUse, UserNotFound, NoUsers, UserNotCreate, UpdateNotCreate
-from models.entity.User import User, UserLogin
+from models.entity.User import User
 
 from utils.Conexion import Conexion
 
@@ -24,7 +24,6 @@ class ModelUser:
         fetch = conn.fetchall()
         if not fetch:
             raise NoUsers()
-
         return cls.response(fetch)
 
     @classmethod

@@ -192,8 +192,8 @@ def discord_all():
         try:
             message = MessageModel.delete_message(id_message)
             return message
-        except Exception as e:
-            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+        except GeneralError:
+            raise GeneralError()
 
     @app.route("/api/message/update/<int:id_message>", methods=['PUT'])
     def update_message(id_message):
