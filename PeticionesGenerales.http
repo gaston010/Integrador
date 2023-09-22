@@ -78,3 +78,6 @@ Content-Type: application/json
     "servidor_id": 3,
     "autor_id": 1
 }
+
+###
+GET 127.0.0.1:5000/api/channel/list

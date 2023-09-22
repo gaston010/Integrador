@@ -98,3 +98,24 @@ class ModelChannel:
 
         except Exception as e:
             raise Exception(e)
+
+    @classmethod
+    def get_channels(cls):
+        conn = Conexion()
+        try:
+            sql = """SELECT * FROM canal"""
+            conn.execute(sql)
+            channel = conn.fetchall()
+            if channel is not None:
+                chanel_list = []
+                for canal in channel:
+                    item = Channel(canal[0], canal[1], canal[2], canal[3], canal[4], canal[5])
+                    chanel_list.append(item.to_json())
+                return chanel_list, 200
+            else:
+                response_data = {
+                    "message": "No se encontraron canales en el servidor"
+                }
+                return response_data, 404
+        except Exception:
+            raise Exception
