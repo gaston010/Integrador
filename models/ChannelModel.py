@@ -33,9 +33,19 @@ class ModelChannel:
         try:
             sql = """INSERT INTO canal (nombre_canal, descripcion, servidor_id, autor_id) VALUES (%s, %s, %s, %s)"""
             conn.execute(sql, (nombre_canal, descripcion, servidor_id, autor_id))
-            return conn.commit()
-        except Exception as e:
-            raise Exception(e)
+            conn.commit()
+            if conn.rowcount() > 0:
+                data_response = {
+                    "message": "Channel created successfully",
+                }
+                return data_response, 201
+            else:
+                data_response = {
+                    "message": "Channel not created a error"
+                }
+                return data_response, 400
+        except Exception:
+            raise Exception()
 
     @classmethod
     def update_channel(cls, nombre_canal, descripcion, id_canal):
@@ -88,4 +98,3 @@ class ModelChannel:
 
         except Exception as e:
             raise Exception(e)
-
