@@ -1,4 +1,4 @@
-POST 127.0.0.1:5000/api/user/login
+POST 127.0.0.1:5000/api/login
 Content-Type: application/json
 
 {
@@ -234,3 +234,8 @@ Content-Type: application/json
 
 #delete messsage
 DELETE 127.0.0.1:5000/api/message/delete/1
+
+
+
+###
+GET 127.0.0.1:5000/

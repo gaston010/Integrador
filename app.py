@@ -27,7 +27,7 @@ def hello_world():
         "Channel EndPoints": {
             "Channel by id": "/api/channel/server/<int:id_server>",
             "Add Channel": "/api/channel/add",
-            "Update Channel": "/api/channel/update/<int:id_channel>",
+            "Channel List": "/api/channel/list"
         },
         "Login User": {
             "Login": "/api/user/login",
