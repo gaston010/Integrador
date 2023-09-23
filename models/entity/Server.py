@@ -1,7 +1,7 @@
 class Server:
 
     def __init__(self, id_servidor, nombre_servidor, descripcion, autor_id, fecha_creacion, ultima_actualizacion,
-                 estado):
+                 estado, icono):
         self.id_servidor = id_servidor
         self.nombre_servidor = nombre_servidor
         self.descripcion = descripcion
@@ -9,6 +9,7 @@ class Server:
         self.fecha_creacion = fecha_creacion
         self.ultima_actualizacion = ultima_actualizacion
         self.estado = estado
+        self.icono = icono
 
     def to_json(self):
         return {
@@ -18,7 +19,8 @@ class Server:
             "autor_id": self.autor_id,
             "fecha_creacion": self.fecha_creacion,
             "ultima_actualizacion": self.ultima_actualizacion,
-            "estado": self.estado
+            "estado": self.estado,
+            "icono": self.icono
         }
 
 

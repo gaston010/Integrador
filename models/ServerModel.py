@@ -9,7 +9,7 @@ class ModelServer:
         server_list = []
         for server in data:
             server = Server(server[0], server[1], server[2],
-                            server[3], server[4], server[5], server[6])
+                            server[3], server[4], server[5], server[6], server[7])
             server_list.append(server.to_json())
         return server_list
 
