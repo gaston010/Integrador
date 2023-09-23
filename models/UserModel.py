@@ -87,7 +87,7 @@ class ModelUser:
     @classmethod
     def add_user(cls, nombre, email, password, nick):
         conn = Conexion()
-        avatar = "https://www.gravatar.com/avatar/default?s=200&d=mp"
+        avatar = f"https://ui-avatars.com/api/?background=random&name={nombre}"
 
         if cls.check_user(email):
             result = {
@@ -98,7 +98,7 @@ class ModelUser:
         else:
             password_hash = User.generate_hash(password)
             try:
-                sql = 'INSERT INTO usuario (nombre, email, password, avatar) VALUES (%s, %s, %s, %s)'
+                sql = """INSERT INTO usuario (nombre, email, password, avatar, nick) VALUES (%s, %s, %s, %s,%s)"""
                 values = (nombre, email, password_hash, avatar, nick)
                 conn.execute(sql, values)
                 conn.commit()

@@ -48,7 +48,7 @@ def discord_all():
             return jsonify({'Msg': 'Missing data'}), 400
 
         try:
-            user = ModelUser.add_user(nombre, email, password)
+            user = ModelUser.add_user(nombre, email, password, nick)
             return jsonify({"Create": user}), 201
         except Exception as e:
             return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500

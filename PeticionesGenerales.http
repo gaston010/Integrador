@@ -89,9 +89,10 @@ POST 127.0.0.1:5000/api/user/add
 Content-Type: application/json
 
 {
-    "nombre": "Jazmin",
-    "password": "jasmincito",
-     "email": "jaz@gmail.com"
+    "nombre": "Pablito",
+    "password": "pablo",
+     "email": "pablo_c@gmail.com",
+    "nick": "pintor"
 }
 
 ###
