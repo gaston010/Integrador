@@ -1,5 +1,5 @@
 # Entity
-from models.entity.User import User
+from models.entity.User import User, UserLogin
 
 from utils.Conexion import Conexion
 
@@ -85,8 +85,10 @@ class ModelUser:
             raise Exception(e)
 
     @classmethod
-    def add_user(cls, nombre, email, password):
+    def add_user(cls, nombre, email, password, nick):
         conn = Conexion()
+        avatar = "https://www.gravatar.com/avatar/default?s=200&d=mp"
+
         if cls.check_user(email):
             result = {
                 'status': 409,
@@ -94,9 +96,10 @@ class ModelUser:
             }
             return result
         else:
+            password_hash = User.generate_hash(password)
             try:
-                sql = 'INSERT INTO usuario (nombre, email, password) VALUES (%s, %s, %s)'
-                values = (nombre, email, password)
+                sql = 'INSERT INTO usuario (nombre, email, password, avatar) VALUES (%s, %s, %s, %s)'
+                values = (nombre, email, password_hash, avatar, nick)
                 conn.execute(sql, values)
                 conn.commit()
                 if conn.rowcount() > 0:
@@ -109,10 +112,36 @@ class ModelUser:
                 raise Exception(e)
 
     @classmethod
+    def check_pass(cls, email, password):
+        conn = Conexion()
+        try:
+            sql = """SELECT password FROM usuario WHERE email = %s"""
+            conn.execute(sql, (email,))
+            dato = conn.fetchone()
+            ps = User.check_password(dato[0], password)
+            if ps:
+                return True
+            else:
+                return False
+        except Exception as e:
+            raise Exception(e)
+
+    @classmethod
+    def login_cls(cls, email, password):
+        if cls.check_pass(email, password):
+            return cls.login_user(email, password)
+        else:
+            result = {
+                'status': 401,
+                'message': 'Password or email incorrect'
+            }
+            return result
+
+    @classmethod
     def check_user(cls, email):
         conn = Conexion()
         try:
-            sql = 'SELECT * FROM usuario WHERE email = %s'
+            sql = """SELECT * FROM usuario WHERE email = %s"""
             conn.execute(sql, (email,))
             dato = conn.fetchone()
             if dato is not None:
@@ -126,7 +155,7 @@ class ModelUser:
     def edit_user(cls, nombre, apellido, nick, avatar, id_user):
         conn = Conexion()
         try:
-            sql = 'UPDATE usuario SET nombre = %s, apellido = %s, nick = %s, avatar = %s WHERE id_usuario = %s'
+            sql = """UPDATE usuario SET nombre = %s, apellido = %s, nick = %s, avatar = %s WHERE id_usuario = %s"""
             values = (nombre, apellido, nick, avatar, id_user)
             conn.execute(sql, values)
             conn.commit()
@@ -152,7 +181,7 @@ class ModelUser:
     def delete_user(cls, id_user):
         conn = Conexion()
         try:
-            sql = 'UPDATE usuario SET estado = 0 WHERE id_usuario = %s'
+            sql = """UPDATE usuario SET estado = 0 WHERE id_usuario = %s"""
             conn.execute(sql, (id_user,))
             conn.commit()
             if conn.rowcount() > 0:
@@ -175,10 +204,28 @@ class ModelUser:
     def get_users_disable(cls):
         conn = Conexion()
         try:
-            sql = 'SELECT * FROM usuario WHERE estado = 0'
+            sql = """SELECT * FROM usuario WHERE estado = 0"""
             conn.execute(sql)
             fetch = conn.fetchall()
             return cls.response(fetch)
         except Exception as e:
             raise Exception(e)
 
+    @classmethod
+    def login_user(cls, email, password):
+        conn = Conexion()
+        try:
+            sql = """SELECT * FROM usuario WHERE email = %s"""
+            conn.execute(sql, (email,))
+            fetch = conn.fetchone()
+            if fetch is not None:
+                user = UserLogin(fetch[0], fetch[1], fetch[2], fetch[5], fetch[3], fetch[6])
+                return user.to_json_login()
+            else:
+                result = {
+                    'status': 404,
+                    'message': 'User not found'
+                }
+                return result
+        except Exception as e:
+            raise Exception(e)

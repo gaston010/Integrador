@@ -42,6 +42,7 @@ def discord_all():
         nombre = request.json['nombre']
         email = request.json['email']
         password = request.json['password']
+        nick = request.json['nick']
 
         if not nombre or not email or not password:
             return jsonify({'Msg': 'Missing data'}), 400
@@ -86,7 +87,7 @@ def discord_all():
             return jsonify({'Msg': 'Missing password'}), 400
 
         try:
-            user = LoginUser.login_cls(email, password)
+            user = ModelUser.login_user(email, password)
             return user
         except Exception as e:
             return Exception({'message': 'Internal Server Error', 'Error': str(e)}), 500
