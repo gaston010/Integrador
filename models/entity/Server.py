@@ -35,15 +35,15 @@ class ServeUser:
 
     def to_json(self):
         return {
-
             "Servidor": {
                 "servidor_id": self.id_servidor,
                 "nombre_servidor": self.nombre_servidor,
                 "descripcion": self.descripcion,
-                "autor": {
-                    "autor_id": self.autor_id,
-                    "nombre": self.nombre
-                }
+
+            },
+            "Usuario": {
+                "autor_id": self.autor_id,
+                "nombre": self.nombre
             }
 
         }
