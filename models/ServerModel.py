@@ -169,11 +169,11 @@ class ModelServer:
     def get_server_by_user(cls, id_user):
         conn = Conexion()
         try:
-            sql = """SELECT id_usuario, nombre, email ,nick , servidor_id, nombre_servidor, descripcion
-                    from usuario_servidor us
-                    inner join usuario u on id_usuario = usuario_id
-                    inner join servidor s on id_servidor = servidor_id
-                     where usuario_id = %s"""
+            sql = """
+                SELECT id_servidor, nombre_servidor, descripcion, autor_id, nombre
+                from servidor s
+                         inner join usuario u on autor_id = id_usuario
+                where autor_id = %s"""
             conn.execute(sql, (id_user,))
             servers = conn.fetchall()
             server_list = []
@@ -184,9 +184,8 @@ class ModelServer:
                 return response_data, 404
             else:
                 for server in servers:
-                    server = ServeUser(server[0], server[1], server[2], server[3], server[4], server[5], server[6])
+                    server = ServeUser(server[0], server[1], server[2], server[3], server[4])
                     server_list.append(server.to_json())
-
             return server_list, 200
         except Exception as e:
             raise Exception(e)

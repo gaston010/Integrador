@@ -26,27 +26,24 @@ class Server:
 
 class ServeUser:
 
-    def __init__(self, id_usuario, nombre, email, nick, servidor_id, nombre_servidor, descripcion):
-        self.id_usuario = id_usuario
-        self.nombre = nombre
-        self.email = email
-        self.nick = nick
-        self.servidor_id = servidor_id
+    def __init__(self, id_servidor, nombre_servidor, descripcion, autor_id, nombre):
+        self.id_servidor = id_servidor
         self.nombre_servidor = nombre_servidor
         self.descripcion = descripcion
+        self.autor_id = autor_id
+        self.nombre = nombre
 
     def to_json(self):
         return {
-            "Usuario": {
-                "id_usuario": self.id_usuario,
-                "nombre": self.nombre,
-                "email": self.email,
-                "nick": self.nick
-            },
+
             "Servidor": {
-                "servidor_id": self.servidor_id,
+                "servidor_id": self.id_servidor,
                 "nombre_servidor": self.nombre_servidor,
-                "descripcion": self.descripcion
+                "descripcion": self.descripcion,
+                "autor": {
+                    "autor_id": self.autor_id,
+                    "nombre": self.nombre
+                }
             }
 
         }
