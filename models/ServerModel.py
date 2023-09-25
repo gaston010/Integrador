@@ -76,6 +76,9 @@ class ModelServer:
         if cls.check_server(nombre):
             return {'message': 'Server already exists'}, 400
 
+        if not nombre or not descripcion or not autor:
+            return {'message': 'Empty data'}, 400
+
         conn = Conexion()
         try:
             sql = 'INSERT INTO servidor (nombre_servidor, descripcion, autor_id) VALUES (%s, %s, %s)'
