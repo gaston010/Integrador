@@ -12,6 +12,7 @@ def hello_world():
             "List Server Disable": "/api/server/list/disable",
             "List Server Id": "/api/server/<int:server_id>",
             "Server By user": "/api/server/user/<int:id_user>",
+            "Server on User": "api/server/user/<int:id_user>/list",
             "Add Server": "/api/server/add",
             "Update Server": "/api/server/update/<int:id_server>",
             "Delete Server": "/api/server/delete/<int:id_server>"

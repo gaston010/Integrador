@@ -177,6 +177,14 @@ def discord_all():
         except Exception as e:
             return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
 
+    @app.route('/api/server/user/<int:id_user>/list', methods=['GET'])
+    def server_on_user(id_user):
+        try:
+            server = ModelServer.server_user(id_user)
+            return server
+        except Exception as e:
+            return jsonify({'message': 'Internal Server Error', 'Error': str(e)}), 500
+
     # CANALES
 
     @app.route("/api/channel/server/<int:id_server>", methods=['GET'])

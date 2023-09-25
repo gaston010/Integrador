@@ -211,3 +211,32 @@ class ModelServer:
             return server_list, 200
         except Exception as e:
             raise Exception(e)
+
+    @classmethod
+    def server_user(cls, id_user):
+        conn = Conexion()
+        try:
+            sql = """SELECT nombre, usuario_id, s.nombre_servidor, servidor_id from usuario_servidor
+                INNER JOIN usuario on usuario.id_usuario = usuario_servidor.usuario_id
+                INNER JOIN servidor s on s.id_servidor = usuario_servidor.servidor_id
+                WHERE usuario_id = %s AND s.estado = 1"""
+            conn.execute(sql, (id_user,))
+            servers = conn.fetchall()
+            server_list = []
+            if servers is None:
+                response_data = {
+                    'message': 'Servers not found'
+                }
+                return response_data, 404
+            else:
+                for server in servers:
+                    response_data = {
+                        "Nombre": server[0],
+                        "User ID": server[1],
+                        "Server Name": server[2],
+                        "Server ID": server[3]
+                    }
+                    server_list.append(response_data)
+            return server_list, 200
+        except Exception as e:
+            raise Exception(e)
