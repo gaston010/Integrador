@@ -234,10 +234,10 @@ class ModelServer:
             else:
                 for server in servers:
                     response_data = {
-                        "Nombre": server[0],
-                        "User ID": server[1],
-                        "Server Name": server[2],
-                        "Server ID": server[3]
+                        "nombre": server[0],
+                        "user_id": server[1],
+                        "server_name": server[2],
+                        "server_id": server[3]
                     }
                     server_list.append(response_data)
             return server_list, 200

@@ -118,3 +118,16 @@ Content-Type: application/json
   "descripcion": "Add user on server auto?",
   "autor_id": 2
 }
+
+
+###
+
+POST 127.0.0.1:5000/api/message/add
+Content-Type: application/json
+
+{
+  "mensajes": "Nuevo mensaje",
+  "servidor_id": 1,
+  "canal_id": 1,
+  "autor_id": 2
+}
