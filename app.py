@@ -33,6 +33,8 @@ def hello_world():
         },
         "Login User": {
             "Login": "/api/user/login",
+            "Logout": "/api/user/logout",
+            "Update Password": "/api/user/update/password/<int:id_user>"
         },
         "Message EndPoints": {
             "Message by id channel": "/api/message?<int:id_channel>",
