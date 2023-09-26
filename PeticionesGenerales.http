@@ -104,4 +104,17 @@ Content-Type: application/json
 
 
 ###
-GET 127.0.0.1:5000/api/server/user/3/list
+GET 127.0.0.1:5000/api/server/user/2/list
+
+
+
+###
+
+POST 127.0.0.1:5000/api/server/add
+Content-Type: application/json
+
+{
+  "nombre_servidor": "Nuevo Servidor",
+  "descripcion": "Add user on server auto?",
+  "autor_id": 2
+}

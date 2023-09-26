@@ -229,3 +229,14 @@ class ModelUser:
                 return result
         except Exception as e:
             raise Exception(e)
+
+    @classmethod
+    def check_user_id(cls, user_id):
+        conn = Conexion()
+        sql = """SELECT * FROM usuario WHERE id_usuario = %s"""
+        conn.execute(sql, (user_id,))
+        dato = conn.fetchone()
+        if not dato:
+            return False
+        else:
+            return True

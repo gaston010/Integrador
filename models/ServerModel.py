@@ -1,3 +1,4 @@
+from models.UserModel import ModelUser
 from utils.Conexion import Conexion
 from models.entity.Server import Server, ServeUser
 
@@ -79,17 +80,17 @@ class ModelServer:
         if not nombre or not descripcion or not autor:
             return {'message': 'Empty data'}, 400
 
-        conn = Conexion()
-        try:
+        if ModelUser.check_user_id(autor):
+            conn = Conexion()
             sql = 'INSERT INTO servidor (nombre_servidor, descripcion, autor_id) VALUES (%s, %s, %s)'
             conn.execute(sql, (nombre, descripcion, autor))
             conn.commit()
+            id_server = cls.get_by_last_add()[0]['id_servidor']
             if conn.rowcount() > 0:
+                cls.add_user_to_server(autor, id_server)
                 data_response = {
                     'message': 'Server created successfully',
-                    "New server info": {
-                        "id_servidor": cls.get_by_last_add()
-                    }
+                    'New Server info:': cls.get_by_last_add(),
                 }
                 return data_response, 201
             else:
@@ -97,9 +98,8 @@ class ModelServer:
                     'message': 'Server not created a error'
                 }
                 return data_response, 400
-
-        except Exception as e:
-            raise Exception(e)
+        else:
+            return {'message': 'User not found'}, 404
 
     @classmethod
     def server_update(cls, nombre_servidor, descripcion, id_server):
@@ -243,3 +243,30 @@ class ModelServer:
             return server_list, 200
         except Exception as e:
             raise Exception(e)
+
+    @classmethod
+    def add_user_to_server(cls, id_user, id_server):
+        conn = Conexion()
+        combine = str(id_user) + str(id_server)
+
+        try:
+            sql = 'INSERT INTO usuario_servidor (usuario_id, servidor_id, combine_id) VALUES (%s, %s, %s)'
+            conn.execute(sql, (id_user, id_server, combine))
+            conn.commit()
+            user = ModelUser.user_id(id_user)
+            server = cls.get_server_by_id(id_server)
+            if conn.rowcount() > 0:
+                response_data = {
+                    "Message": "User was added successfully",
+                    "Data": [
+                        {
+                            "User": user,
+                            "Server": server
+                        }
+                    ]
+                }
+                return response_data, 200
+            else:
+                return {'message': 'User not added to server'}, 400
+        except Exception:
+            raise Exception
