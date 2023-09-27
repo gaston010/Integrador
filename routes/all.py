@@ -56,12 +56,9 @@ def discord_all():
     @app.route('/api/user/update/<int:id_user>', methods=['PUT'])
     def edit_user(id_user):
         nombre = request.json['nombre']
-        apellido = request.json['apellido']
         nick = request.json['nick']
-        avatar = request.json['avatar']
-
         try:
-            user_edit = ModelUser.edit_user(nombre, apellido, nick, avatar, id_user)
+            user_edit = ModelUser.edit_user(nombre, nick, id_user)
             return user_edit
         except Exception as e:
             return jsonify({'Msg': 'Internal Server Error', 'Error': str(e)}), 500

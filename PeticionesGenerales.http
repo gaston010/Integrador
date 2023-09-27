@@ -150,3 +150,21 @@ Content-Type: application/json
   "email": "pablo1234@gmail.com",
   "nick": "PabloPintor"
 }
+
+
+
+###
+
+GET 127.0.0.1:5000/api/message/33
+
+
+
+
+###
+PUT 127.0.0.1:5000/api/user/update/27
+Content-Type: application/json
+
+{
+    "nombre": "Guillermo",
+    "nick": "Guille"
+}

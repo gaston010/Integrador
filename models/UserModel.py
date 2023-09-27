@@ -177,26 +177,23 @@ class ModelUser:
             raise Exception(e)
 
     @classmethod
-    def edit_user(cls, nombre, apellido, nick, avatar, id_user):
+    def edit_user(cls, nombre, nick, id_user):
         conn = Conexion()
         try:
-            sql = """UPDATE usuario SET nombre = %s, apellido = %s, nick = %s, avatar = %s WHERE id_usuario = %s"""
-            values = (nombre, apellido, nick, avatar, id_user)
-            conn.execute(sql, values)
+            sql = """UPDATE usuario SET nombre = %s, nick = %s WHERE id_usuario = %s"""
+            conn.execute(sql, (nombre, nick, id_user))
             conn.commit()
             if conn.rowcount() > 0:
-                result = {
-                    'status': 202,
-                    'message': 'Usuario actualizado correctamente'
-
+                response_data = {
+                    'message': 'Usuario actualizado correctamente',
+                    "user": cls.user_id(id_user)
                 }
-                return result
+                return response_data, 202
             else:
-                result = {
-                    'status': 404,
+                response_data = {
                     'message': 'No se pudo actualizar el usuario'
                 }
-                return result
+                return response_data, 400
         except Exception as e:
             raise Exception(e)
         finally:
