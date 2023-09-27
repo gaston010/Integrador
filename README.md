@@ -176,4 +176,4 @@ Envía una solicitud de extracción (pull request) con una descripción detallad
 
 ## Licencia
 
-Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para obtener más detalles.
+Este proyecto es solo para uso educativo. Todos los derechos reservados
