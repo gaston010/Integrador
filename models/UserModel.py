@@ -87,7 +87,7 @@ class ModelUser:
     @classmethod
     def add_user(cls, nombre, email, password, nick):
         conn = Conexion()
-        avatar = f"https://ui-avatars.com/api/?background=random&name={nombre}"
+        avatar = f"https://robohash.org/Gusto={nombre}"
 
         if cls.check_user(email):
             result = {
