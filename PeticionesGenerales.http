@@ -131,3 +131,11 @@ Content-Type: application/json
   "canal_id": 1,
   "autor_id": 2
 }
+
+###
+POST 127.0.0.1:5000/api/server/1/add
+Content-Type: application/json
+
+{
+  "id_server": 27
+}

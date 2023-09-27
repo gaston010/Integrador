@@ -11,6 +11,7 @@ def hello_world():
             "List Server": "/api/server/list",
             "List Server Disable": "/api/server/list/disable",
             "List Server Id": "/api/server/<int:server_id>",
+            "Add user on Server": "/api/server/<int:id_user>/add",
             "Server By user": "/api/server/user/<int:id_user>",
             "Server on User": "api/server/user/<int:id_user>/list",
             "Add Server": "/api/server/add",

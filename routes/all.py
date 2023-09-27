@@ -154,14 +154,7 @@ def discord_all():
 
     @app.route('/api/server/<int:id_user>/add', methods=['POST'])
     def add_server_user(id_user):
-        """
-        Agrega un servidor a un usuario
 
-        :param id_user: id del usuario
-        {
-            "id_server": 1
-        }
-        """
         id_server = request.json['id_server']
         try:
             server = ModelServer.add_server_user(id_user, id_server)
