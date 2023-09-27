@@ -85,6 +85,29 @@ class ModelUser:
             raise Exception(e)
 
     @classmethod
+    def get_by_last_add(cls):
+        conn = Conexion()
+        try:
+            sql = 'SELECT id_usuario,nombre, nick, email FROM usuario ORDER BY id_usuario DESC LIMIT 1'
+            conn.execute(sql)
+            user = conn.fetchall()
+            if user is not None:
+                response_data = {
+                    "id_usuario": user[0][0],
+                    "nombre": user[0][1],
+                    "nick": user[0][2],
+                    "email": user[0][3]
+                }
+                return response_data, 200
+            else:
+                result = {
+                    'status': 404,
+                }
+                return result
+        except Exception as e:
+            raise Exception(e)
+
+    @classmethod
     def add_user(cls, nombre, email, password, nick):
         conn = Conexion()
         avatar = f"https://robohash.org/Gusto={nombre}"
@@ -102,10 +125,12 @@ class ModelUser:
                 values = (nombre, email, password_hash, avatar, nick)
                 conn.execute(sql, values)
                 conn.commit()
+                user = cls.get_by_last_add()
                 if conn.rowcount() > 0:
                     result = {
                         'status': 201,
-                        'message': 'Usuario creado correctamente'
+                        'message': 'Usuario creado correctamente',
+                        'user': user
                     }
                     return result
             except Exception as e:

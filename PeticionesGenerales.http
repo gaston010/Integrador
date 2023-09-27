@@ -139,3 +139,14 @@ Content-Type: application/json
 {
   "id_server": 27
 }
+
+###
+POST 127.0.0.1:5000/api/user/add
+Content-Type: application/json
+
+{
+  "nombre": "Pablo",
+  "password": "pablo1234",
+  "email": "pablo1234@gmail.com",
+  "nick": "PabloPintor"
+}
