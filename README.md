@@ -41,6 +41,7 @@ puede servir como base para la construcción de una aplicación de chat y comuni
 
 - Python 3.9 / 3.10.8
 - Flask 2.3.2
+- Cors 3.0.10
 - pip
 - virtualenv (opcional)
 - git
