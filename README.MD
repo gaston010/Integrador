@@ -172,11 +172,7 @@ La respuesta es un JSON con el nuevo servidor creado y el código de estado 201
 - [Javier](https://github.com/FSALVA157)
 - [Virginia](https://github.com/virginia1612)
 
-¡Agradecemos las contribuciones! Si deseas contribuir a este proyecto, por favor sigue los pasos:
 
-Crea un fork del repositorio.
-Trabaja en tus cambios en una rama (branch) separada.
-Envía una solicitud de extracción (pull request) con una descripción detallada de tus cambios.
 
 ## Licencia
 
