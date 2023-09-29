@@ -1,35 +1,3 @@
-POST 127.0.0.1:5000/api/login
-Content-Type: application/json
-
-{
-  "email": "data@home.com",
-  "password": "admin"
-}
-
-####
-GET 127.0.0.1:5000/api/server/list
-
-
-###
-GET 127.0.0.1:5000/api/channel/server/3
-
-
-###
-POST 127.0.0.1:5000/api/message/add
-Content-Type: application/json
-
-{
-  "mensajes": "Tiempo de prueba",
-  "servidor_id": 3,
-  "canal_id": 3,
-  "autor_id": 1
-}
-
-
-###
-GET 127.0.0.1:5000/api/message?id_channel=3
-
-
 ###
 #mensaje update
 PUT 127.0.0.1:5000/api/message/update/7
