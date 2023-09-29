@@ -7,14 +7,12 @@ Está diseñada para ofrecer una funcionalidad similar a la plataforma Discord, 
 servidores, canales de chat, enviar mensajes. Es una solución versátil y escalable que
 puede servir como base para la construcción de una aplicación de chat y comunicación en tiempo real.
 
-
-
 ## Características Clave
+
 - Creación y gestión de servidores y canales de chat.
 - Envío de mensajes de texto.
 - Integración con avatares y perfiles de usuario.
 - Autenticación de usuarios.
-
 
 ### Teconlogias Utilizadas
 
@@ -32,10 +30,11 @@ puede servir como base para la construcción de una aplicación de chat y comuni
 
 1. [Requisitos](#requisitos)
 2. [Instalación](#instalación)
-3. [Uso](#uso)
-4. [Contribución](#contribución)
-5. [Licencia](#licencia)
-6. [Guia](#guia)
+3. [Der](#der)
+4. [Uso](#uso)
+5. [Contribución](#contribución)
+6. [Licencia](#licencia)
+7. [Guia](#guia)
 
 ## Requisitos
 
@@ -46,6 +45,12 @@ puede servir como base para la construcción de una aplicación de chat y comuni
 - virtualenv (opcional)
 - git
 - [requirements.txt](requirements.txt)
+
+## Der
+
+Esquema de la base de datos utilizado para el proyecto.
+
+![img.png](utils/img.png)
 
 ## Instalación
 
@@ -82,11 +87,11 @@ python app.py
 
 ## Uso
 
-
 Por el momento la API se encuentra en un servidor de pruebas para poder hacer peticiones atraves de la misma(NO WEB).
 [API](https://api-2-svwb.onrender.com) donde en el mismo / se listan todos los endpoints disponibles.
 
 ## Guia
+
 Dentro del proyecto se encuentra un archivo llamado PeticionesGenerales.http,
 el cual contiene las peticiones necesarias para probar el proyecto.
 (O en el caso con Pycharm, se puede ejecutar el archivo directamente)
@@ -167,13 +172,11 @@ La respuesta es un JSON con el nuevo servidor creado y el código de estado 201
 - [Javier](https://github.com/FSALVA157)
 - [Virginia](https://github.com/virginia1612)
 
-
 ¡Agradecemos las contribuciones! Si deseas contribuir a este proyecto, por favor sigue los pasos:
 
 Crea un fork del repositorio.
 Trabaja en tus cambios en una rama (branch) separada.
 Envía una solicitud de extracción (pull request) con una descripción detallada de tus cambios.
-
 
 ## Licencia
 
