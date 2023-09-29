@@ -1,6 +1,16 @@
-from routes.all import discord_all
+from flask import Flask
 
-app = discord_all()
+from routes import User, Server, Channel, Message
+from routes.errors import errors
+
+app = Flask(__name__)
+# error handle
+app.register_blueprint(errors)
+# user
+app.register_blueprint(User.user_app, url_prefix='/api/user')
+app.register_blueprint(Server.server_app, url_prefix='/api/server')
+app.register_blueprint(Channel.channel_app, url_prefix='/api/channel')
+app.register_blueprint(Message.message_app, url_prefix='/api/message')
 
 
 @app.route('/')
@@ -46,4 +56,4 @@ def hello_world():
 
 if __name__ == '__main__':
     app.config['CORS_HEADERS'] = 'Content-Type'
-    app.run(debug=True)
+    app.run()

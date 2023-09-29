@@ -238,4 +238,4 @@ DELETE 127.0.0.1:5000/api/message/delete/1
 
 
 ###
-GET 127.0.0.1:5000/
+GET 127.0.0.1:5000/api/server/list
