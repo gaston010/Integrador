@@ -1,4 +1,8 @@
+import os  # Asegúrate de importar la biblioteca os
 import mysql.connector as mysql
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Conexion:
@@ -6,10 +10,10 @@ class Conexion:
     def __init__(self):
         try:
             self.conexion = mysql.connect(
-                host="sql.freedb.tech",
-                user="freedb_discordia",
-                password="kn@QS6G3F2$WGtJ",
-                database="freedb_discordia"
+                host=os.getenv("HOST"),
+                user=os.getenv("USER"),
+                password=os.getenv("PASSWORD"),
+                database=os.getenv("DATABASE")
             )
             self.cursor = self.conexion.cursor()
         except Exception as e:
