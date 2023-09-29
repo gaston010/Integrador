@@ -61,9 +61,6 @@ def update_channel(id_canal):
         - id_canal (int) The ID of the channel to update.
         - descripcion (str): The updated description of the channel.
         - nombre_canal (str) The updated name of the channel.
-
-
-
         :raise GeneralError: If an error occurs during the channel update.
         :return: A JSON response containing information about the updated channel.
     """

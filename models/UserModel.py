@@ -62,7 +62,8 @@ class ModelUser:
     def edit_user(cls, nombre, apellido, nick, avatar, id_user):
 
         if avatar is None:
-            avatar = "https://www.gravatar.com/avatar/default?s=200&d=mp"
+            avatar = f"https://robohash.org/{nombre}"
+
         # is a default img for user if not have avatar and if no add new img on the edit user table
         # the img as random img for user from the web no for the user
 

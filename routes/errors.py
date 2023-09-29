@@ -9,6 +9,7 @@ errors = Blueprint('errors', __name__)
 def handle_exception(error):
     return error.get_response()
 
+
 @errors.app_errorhandler(MissingData)
 def missing_data(error):
     return error.get_response()

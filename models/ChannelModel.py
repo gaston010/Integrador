@@ -112,3 +112,4 @@ class ModelChannel:
                 raise NoChannels()
         except GeneralError:
             raise GeneralError()
+
